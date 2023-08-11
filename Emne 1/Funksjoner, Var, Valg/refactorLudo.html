@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="ludostyle.css" />
+  </head>
+  <body>
+    <div class="game" id="app"></div>
+
+    <script>
+      const playerColors = ["green", "yellow", "red", "blue"]
+      GenerateBoard();
+
+      function GenerateBoard() {
+        document.getElementById("app").innerHTML += /*HTML*/ `
+        <!--The "Home Square"-->
+        <div class="home"></div>
+
+        ${GenerateHouses(playerColors)}
+        ${GeneratePaths(playerColors)}
+        ${GenerateSafeAndStart()}`;
+      }
+
+      function GenerateHouses(arrayOfColors) {
+        let HTMLCode = "";
+        //Moved a few unique Style= attributes to CSS (.house.yellow etc..) instead of dealing with it here.
+        arrayOfColors.forEach((element) => {
+            HTMLCode += `<div class="house ${element}">
+                         <div class="box">
+                             <div class="square square-one ${element}"></div>
+                             <div class="square square-two ${element}"></div>
+                             <div class="square square-three ${element}"></div>
+                             <div class="square square-four ${element}"></div>
+                         </div>
+                     </div>`;
+        });
+        return HTMLCode;
+      }
+
+      function GeneratePaths(arrayOfColors) {
+        // The size of the cells are 6.66% x 6.66%, so the next cell needs to move by 6.66%
+        let spaceInterval = 6.66;
+        let startAndEndPoints = ["40", "46.66", "53.32"];
+        let HTMLCode = "";
+        //Generates all cells except Start and Safe.
+        //Tried doing Start and Safe here, but my implementation of conditions and checks seemed to create more work, than putting the "special markers" in its own function.
+        for (let index = 0; index < startAndEndPoints.length; index++) {
+            //Nested loop to deal with 2nd dimension.
+          for (let i = 0; i < 6; i++) {
+            if (index == 1 && i != 0) {
+              HTMLCode += `
+                    <div class="cells ${arrayOfColors[0]}" style="top: ${startAndEndPoints[index]}%; left: ${i * spaceInterval}%"></div>
+                    <div class="cells ${arrayOfColors[2]}" style="top: ${startAndEndPoints[index]}%; right: ${i * spaceInterval}%"></div>
+                    <div class="cells ${arrayOfColors[1]}" style="top: ${i*spaceInterval}%; left: ${startAndEndPoints[index]}%"></div>
+                    <div class="cells ${arrayOfColors[3]}" style="bottom: ${i*spaceInterval}%; left: ${startAndEndPoints[index]}%"></div>`;
+
+            } else {
+              HTMLCode += `
+                    <div class="cells" style="top: ${startAndEndPoints[index]}%; left: ${i * spaceInterval}%"></div>
+                    <div class="cells" style="top: ${startAndEndPoints[index]}%; right: ${i * spaceInterval}%"></div>
+                    <div class="cells" style="top: ${i*spaceInterval}%; left: ${startAndEndPoints[index]}%"></div>
+                    <div class="cells" style="bottom: ${i*spaceInterval}%; left: ${startAndEndPoints[index]}%"></div>`;
+            }
+          }
+        }
+          console.log(HTMLCode);
+          return HTMLCode;
+        }
+      
+      function GenerateSafeAndStart(){
+        return `
+            <div class="cells safe" style="top: 53.32%;left:13.32%;"></div>
+            <div class="cells g-start" style="top: 40%;left:6.66%;"></div>
+            <div class="cells safe" style="top: 13.32%;left:40%;"></div>
+            <div class="cells y-start" style="top: 6.66%;left:53.32%;"></div>
+            <div class="cells safe" style="top: 40%;right:13.32%;"></div>
+            <div class="cells b-start" style="top: 53.32%;right:6.66%;"></div>
+            <div class="cells safe" style="bottom: 13.32%;left:53.32%;"></div>
+            <div class="cells r-start" style="bottom: 6.66%;left:40%;"></div>
+        `
+        
+      }
+      
+      
+    </script>
+  </body>
+</html>

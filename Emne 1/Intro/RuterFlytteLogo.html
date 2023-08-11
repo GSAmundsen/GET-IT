@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div.square {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid black;
+      }
+      div img {
+        /* Blir da 90% av DIVens størrelse */
+        width: 90%;
+      }
+
+      div.board {
+        display: grid;
+        grid-template-columns: repeat(2, 10rem);
+        grid-template-rows: repeat(2, 10rem);
+      }
+      div.buttons {
+        width: 20rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div id="app">
+      <div class="board">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square">
+          <img src="https://getacademy.no/hubfs/GET_RGB_logo-01-2.png" />
+        </div>
+        <div class="square"></div>
+      </div>
+
+      <div class="buttons">
+        <button>▲</button>
+        
+        <div>
+          <button disabled>◀</button>
+          <button onclick="showLogoBottomRight()">▶</button>
+        </div>
+
+        <button disabled>▼</button>
+      </div>
+    </div>
+
+    <script>
+      function showLogoBottomRight(){
+          document.getElementById("app").innerHTML = /*HTML*/`
+          <div class="board">
+              <div class="square">
+              </div>
+          <div class="square"><img src="https://getacademy.no/hubfs/GET_RGB_logo-01-2.png"/></div>
+          <div class="square">
+              </div>
+          <div class="square"></div>
+      </div>
+
+      <div class="buttons">
+          <button>▲</button>
+          <div>
+              <button>◀</button>
+              <button disabled>▶</button>
+          </div>
+          <button disabled>▼</button>
+      </div>
+      `
+      }
+
+      function showLogoTopLeft(){
+          document.getElementById('app').innerHTML = /*HTML*/
+      }
+      function showLogoTopRight(){
+          document.getElementById('app').innerHTML = /*HTML*/
+      }
+      function showLogoBottomLeft(){
+          document.getElementById('app').innerHTML = /*HTML*/
+      }
+    </script>
+  </body>
+</html>

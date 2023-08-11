@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        button{
+            margin-top: 10px;
+        }
+    </style>
+  </head>
+  <body>
+
+    <h1>Quiz!</h1>
+    <hr />
+    <div class="question" id="quiz">
+    </div>
+
+    <script>
+        showQuestion1()
+        function evaluateResult(q, answer){
+            if(q == 1){
+                if(answer == "a3"){
+                    showQuestion2('Riktig!')
+                }else{
+                    showQuestion2('Feil :(')
+                }
+            }
+            if(q == 2){
+                if(answer == "a2"){
+                    showQuestion3('Riktig!')
+                }else{
+                    showQuestion3('Feil :(')
+                }
+            }
+            if(q == 3){
+                if(answer == "a2"){
+                    showComplete('Riktig!')
+                }else{
+                    showComplete('Feil :(')
+                }
+            }
+                
+            
+        }
+        function showQuestion1() {
+            
+            document.getElementById("quiz").innerHTML = /*HTML*/ `
+                <h3>Spørsmål 1</h3>
+                <p>Hva er spørsmål 1?</p>
+                <div>
+                    <button onclick="evaluateResult(1,'a1')">Er 2+3 = ca 4-ish?</button>
+                    <br>
+                    <button onclick="evaluateResult(1,'a2')">Hvor langt er et tau?</button>
+                    <br>
+                    <button onclick="evaluateResult(1,'a3')">Om jeg tenker, er jeg?</button>
+                </div>
+                
+        `;
+      }
+
+      function showQuestion2(previousAnswerResult) {
+            
+        //Setter resultatet på utsiden av *HTML* sånn at man kan bruke variabel. Sikkert en mulighet innenfor ogå.
+            document.getElementById("quiz").innerHTML += 
+            "Svaret på forrige spørsmål var "+previousAnswerResult+
+            /*HTML*/ `
+                
+                <h3>Spørsmål 2</h3>
+                <p>Hva er greia?</p>
+                <div>
+                    <button onclick="evaluateResult(2,'a1')">Har sikker noe med de tingene å gjøre</button>
+                    <br>
+                    <button onclick="evaluateResult(2,'a2')">Aner ikke!</button>
+                    <br>
+                    <button onclick="evaluateResult(2,'a3')">Ja det kan du si..</button>
+                </div>
+                
+        `;
+        }
+        function showQuestion3(previousAnswerResult) {
+            
+            document.getElementById("quiz").innerHTML += 
+            "Svaret på forrige spørsmål var "+previousAnswerResult+
+            /*HTML*/ `
+                
+                <h3>Spørsmål 3</h3>
+                <p>Hvor mange spørsmål er det i denne quizen?</p>
+                <div>
+                    <button onclick="evaluateResult(3,'a1')">Standard mengde -1</button>
+                    <br>
+                    <button onclick="evaluateResult(3,'a2')">Kun så mange som nødvendig</button>
+                    <br>
+                    <button onclick="evaluateResult(3,'a3')">Jan Teigen og Store hvite skjorter</button>
+                </div>
+                
+        `;
+        }
+        function showComplete(previousAnswerResult) {
+            
+            document.getElementById("quiz").innerHTML += 
+            "Svaret på forrige spørsmål var "+previousAnswerResult+
+            /*HTML*/ `
+                
+                <h3>Fullført!</h3>
+                <p>Da var Quizen over for denne gang..</p>
+                <button onclick="showQuestion1()">Ta quizen på nytt</button>
+                              
+        `;
+        }
+
+
+    </script>
+  </body>
+</html>

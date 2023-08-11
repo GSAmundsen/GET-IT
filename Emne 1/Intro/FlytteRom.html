@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <style>
+        h3{
+        display: flex;
+        justify-content: center;
+        background-color: lightgray;
+        }
+        div.buttons {
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        }
+
+
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+    </div>
+    
+       
+</div>
+</div>
+    <script>
+        //Kaller funksjonen position0 ved start, så når siden lastes vil det vises noe i <div id="app"> (på siden)
+        position0();
+
+        // Inngang
+        function position0(){
+            //Setter inn HTML kode i elementet som har ID "app"
+            //onClick kaller funksjonen position1()
+            document.getElementById("app").style.color = "red";
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <h3>Du er ved inngangen.</h3>
+            <div class="buttons">
+            <button disabled>▲</button>
+            <div>
+            <button disabled>◀</button>
+            <button onclick="position1()">▶</button>
+            </div>
+            <button disabled>▼</button>        
+        
+        </div>
+            `
+        }
+
+        // Gangen
+        function position1(){
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <h3>Du er i gangen.</h3>
+            
+                  
+            <div class="buttons">
+           <button onclick="position2()">▲</button>
+           <div>
+           <button onclick="position0()">◀</button>
+           <button onclick="position3()">▶</button>
+           </div>
+           <button onclick="position4()">▼</button>  
+        </div>       
+            `
+        }
+
+         // Bad
+         function position2(){
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <h3>Du er på badet.</h3>
+           
+                  
+            <div class="buttons">
+           <button disabled>▲</button>
+           <div>
+           <button disabled>◀</button>
+           <button disabled>▶</button>
+           </div>
+           <button onclick="position1()">▼</button> 
+        </div>        
+            `
+        }
+
+        // Stue
+        function position3(){
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <h3>Du er i stuen.</h3>
+            
+                  
+            <div class="buttons">
+           <button disabled>▲</button>
+           <div>
+           <button onclick="position1()">◀</button>
+           <button disabled>▶</button>
+           </div>
+           <button onclick="position4()">▼</button> 
+           </div>       
+            `
+        }
+        // Kjøkken
+        function position4(){
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <h3>Du er på kjøkkenet.</h3>
+          
+                  
+            <div class="buttons">
+           <button onclick="position3()">▲</button>
+           <div>
+           <button onclick="position1()">◀</button>
+           <button disabled>▶</button>
+           </div>
+           <button disabled>▼</button>  
+        </div>       
+            `
+        }
+
+    </script>
+  </body>
+</html>

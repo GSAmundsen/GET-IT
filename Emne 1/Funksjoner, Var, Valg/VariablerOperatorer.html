@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+        #board {
+            display: grid;
+            grid-template-columns: repeat(8, 100px);
+            grid-template-rows: repeat(8, 100px);
+        }
+        #board>div {
+            border: 1px solid lightblue;
+        }
+        .selected {
+            background-color: yellow;
+        }
+        .buttons{
+            width: 800px;
+            background-color: aliceblue;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #txt{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="board"></div>
+    <div class="buttons">
+        <button onclick="showBoard(-8)">Opp</button>
+        <div>
+            <button onclick="showBoard(-1)">Venstre</button>
+            <button onclick="showBoard(+1)">Høyre</button>
+        </div>
+        <button onclick="showBoard(8)">Ned</button>
+        <div>
+            <button onclick="ChangeFontSize(1)">Font++++</button>
+            <button onclick="ChangeFontSize(-1)">Font----</button>
+        </div>
+
+    </div>
+
+    <script>
+        let selectedSquareIndex = 7;
+        let fontSizeValue = 12;
+        const size = 64;
+
+        showBoard(0);
+
+        function showBoard(move) {
+            //Adds the change in value to the placement of the Selected, must be an 8x8 grid
+            selectedSquareIndex+=move;
+            //Clamps the value between 0-63, so the value doesnt increase past the grid. When clamped, sets the position to the Min or Max value (0 or 63)
+            selectedSquareIndex = Math.max(0, Math.min(selectedSquareIndex, size-1))
+            //Dont really need to send size and index, since they are global variables.
+            GenerateBoard(size, selectedSquareIndex);
+        }
+
+        //Generates the cells in the grid according to the position(index) of the Selected cell.
+        function GenerateBoard(numberOfSquares, selectedIndex){
+            console.log(selectedSquareIndex);
+            const pattern="<div></div>"
+            const patternSelected = "<div class='selected' id='txt'>O</div>";
+            const HTMLCode = "".padStart(pattern.length*selectedIndex, pattern)+patternSelected+"".padEnd(pattern.length*( numberOfSquares - (selectedIndex + 1)),pattern)
+
+            document.getElementById('board').innerHTML = `${HTMLCode}`
+        }
+
+        //Change fontSize
+        function ChangeFontSize(amount)
+        {   
+            fontSizeValue += amount;
+            console.log(fontSizeValue)
+            document.getElementById("txt").style.fontSize = `${+fontSizeValue}pt`;
+        }
+
+    </script>
+
+</body>
+
+</html>
