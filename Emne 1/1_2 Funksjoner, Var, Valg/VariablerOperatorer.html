@@ -1,93 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
+      #board {
+        display: grid;
+        grid-template-columns: repeat(8, 100px);
+        grid-template-rows: repeat(8, 100px);
+      }
+      #board > div {
+        border: 1px solid lightblue;
+      }
+      .selected {
+        background-color: yellow;
+      }
+      .buttons {
+        width: 800px;
+        background-color: aliceblue;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
 
-        #board {
-            display: grid;
-            grid-template-columns: repeat(8, 100px);
-            grid-template-rows: repeat(8, 100px);
-        }
-        #board>div {
-            border: 1px solid lightblue;
-        }
-        .selected {
-            background-color: yellow;
-        }
-        .buttons{
-            width: 800px;
-            background-color: aliceblue;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #txt{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
+      #txt {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="board"></div>
     <div class="buttons">
-        <button onclick="showBoard(-8)">Opp</button>
+      <button onclick="ShowBoard(-8)">Opp</button>
+      <div>
+        <button onclick="ShowBoard(-1)">Venstre</button>
+        <button onclick="ShowBoard(+1)">Høyre</button>
+      </div>
+      <button onclick="ShowBoard(8)">Ned</button>
+      <!-- Calls a function that changes the font size by +/- 1 -->
+      <div>
+        <h2 id="resizeText" style="display: flex; border: 1px solid black; height: 100px;width: 200px;align-items: center;justify-content: center; font-size: 16px;">Change Size!</h2>
         <div>
-            <button onclick="showBoard(-1)">Venstre</button>
-            <button onclick="showBoard(+1)">Høyre</button>
+            <button onclick="ChangeFontSize(1, 'resizeText')">Size+</button>
+            <button onclick="ChangeFontSize(-1,'resizeText')">Size-</button>
         </div>
-        <button onclick="showBoard(8)">Ned</button>
-        <div>
-            <button onclick="ChangeFontSize(1)">Font++++</button>
-            <button onclick="ChangeFontSize(-1)">Font----</button>
-        </div>
+      </div>
 
+      <!-- Using a dropdown menu to change the fontFamily of the text -->
+      <div>
+        <h3 id="text" style="display: flex; justify-content: center; border: 1px solid black;">Hello World!</h3>
+        <select onchange="SelectFontFamily(this.value, 'text')">
+          <option>Arial</option>
+          <option>Verdana</option>
+          <option>Tahoma</option>
+          <option>Trebuchet MS</option>
+          <option>Times New Roman</option>
+          <option>Georgia</option>
+          <option>Garamond</option>
+          <option>Courier New</option>
+          <option>Brush Script MT</option>
+        </select>
+      </div>
+
+      <!-- Sliders to change the background color of the id="text". Function takes 3 arguments (elementID, red,green,blue) 
+           -1 tells it to use existing values instead of updating that color -->
+      <div>
+        <label for="redValue">Red:</label><br />
+        <input
+          type="range"
+          min="0"
+          max="255"
+          step="1"
+          value="125"
+          onchange="ChangeColor('text', this.value,-1,-1)"
+          id="redValue"
+        /><br />
+
+        <label for="greenValue">Green:</label><br />
+        <input
+          type="range"
+          min="0"
+          max="255"
+          step="1"
+          value="125"
+          onchange="ChangeColor('text', -1,this.value,-1)"
+          id="greenValue"
+        /><br />
+
+        <label for="blueValue">Blue:</label><br />
+        <input
+          type="range"
+          min="0"
+          max="255"
+          step="1"
+          value="125"
+          onchange="ChangeColor('text',-1,-1,this.value)"
+          id="blueValue"
+        /><br />
     </div>
 
     <script>
-        let selectedSquareIndex = 7;
-        let fontSizeValue = 12;
-        const size = 64;
+      let selectedSquareIndex = 7;
+      // Takes the current window, accesses the "ComputedStyle" (after CSS is applied) of the element "resizeText" and returns the fontsize, here its  24px as a string, 
+      // so using the substring() method to get characters at index 0 and 1 (max is excluded), and (casting(?) asserting(?)) is as a number.
+      let fontSizeValue = Number(window.getComputedStyle(document.getElementById("resizeText")).fontSize.substring(0,2));
+      const size = 64;
 
-        showBoard(0);
+      let red = 0;
+      let green = 0;
+      let blue = 0;
 
-        function showBoard(move) {
-            //Adds the change in value to the placement of the Selected, must be an 8x8 grid
-            selectedSquareIndex+=move;
-            //Clamps the value between 0-63, so the value doesnt increase past the grid. When clamped, sets the position to the Min or Max value (0 or 63)
-            selectedSquareIndex = Math.max(0, Math.min(selectedSquareIndex, size-1))
-            //Dont really need to send size and index, since they are global variables.
-            GenerateBoard(size, selectedSquareIndex);
-        }
+      ShowBoard(0);
+      // Calculating the new position of the Selected square, and the regenerates the grid.
+      function ShowBoard(move) {
+        //Adds the change in value to the placement of the Selected, must be an 8x8 grid
+        selectedSquareIndex += move;
+        //No Mathf.clamp in JS, but restricts the value between 0-63, so the value doesnt increase past the grid. When clamped, sets the position to the Min or Max value (0 or 63)
+        selectedSquareIndex = Math.max(0, Math.min(selectedSquareIndex, size - 1));
+        //Dont really need to send size and index, since they are global variables.
+        GenerateBoard(size, selectedSquareIndex);
+      }
 
-        //Generates the cells in the grid according to the position(index) of the Selected cell.
-        function GenerateBoard(numberOfSquares, selectedIndex){
-            console.log(selectedSquareIndex);
-            const pattern="<div></div>"
-            const patternSelected = "<div class='selected' id='txt'>O</div>";
-            const HTMLCode = "".padStart(pattern.length*selectedIndex, pattern)+patternSelected+"".padEnd(pattern.length*( numberOfSquares - (selectedIndex + 1)),pattern)
+      //Generates the cells in the grid according to the position(index) of the Selected cell.
+      function GenerateBoard(numberOfSquares, selectedIndex) {
+        const pattern = "<div></div>";
+        const patternSelected = "<div class='selected' id='txt'>O</div>";
+        const HTMLCode =
+          "".padStart(pattern.length * selectedIndex, pattern) +
+          patternSelected +
+          "".padEnd(
+            pattern.length * (numberOfSquares - (selectedIndex + 1)),
+            pattern
+          );
 
-            document.getElementById('board').innerHTML = `${HTMLCode}`
-        }
+        document.getElementById("board").innerHTML = `${HTMLCode}`;
+      }
 
-        //Change fontSize
-        function ChangeFontSize(amount)
-        {   
-            fontSizeValue += amount;
-            console.log(fontSizeValue)
-            document.getElementById("txt").style.fontSize = `${+fontSizeValue}pt`;
-        }
+      //Change the fontSize value to the previous value + increment
+      function ChangeFontSize(amount, elementID) {
+        fontSizeValue += amount;
+        //using px instead of pt, we grab the fontSize in px on load.
+        document.getElementById(`${elementID}`).style.fontSize = `${fontSizeValue}px`;}
 
+      //Changing the fontFamily
+      function SelectFontFamily(fonttype, elementID) {
+        document.getElementById(`${elementID}`).style.fontFamily = `${fonttype}`;}
+
+      //Function taking 3 arguments, cant "name" arguments in JS, or i could have used named args and default params
+      function ChangeColor(elementID, redValue, greenValue, blueValue) {
+        if(redValue != -1){red = Number(redValue);}
+        if(greenValue != -1){green = Number(greenValue);}
+        if(blueValue != -1){blue = Number(blueValue);}
+        
+        document.getElementById(`${elementID}`).style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+      }
+      
     </script>
-
-</body>
-
+  </body>
 </html>
