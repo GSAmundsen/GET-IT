@@ -4,8 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        
+
+    </style>
 </head>
 <body>
+<div id="app">
+   
+</div>
+ <div id="dato" style="border: 1px">
+        <button id="date" onclick="getDate()">Gi meg en dato!</button>
+    </div>
+
+
+
+<script>
+    let currentDay;
+    let currentMonth;
+    let currentYear;
+
+    //Creates a div that contains current day/month/year, the min/max of the given type, and buttons to increase/decrease the text value
+    showDateSelector()
     
+    function createNumberSelector(current, min, max, type) {
+        let HTMLCode = ``;
+
+        if(type == "Day"){
+            currentDay = current;
+        }
+        if(type =="Month"){
+            currentMonth = current;
+        }
+        if(type =="Year"){
+            currentYear = current;
+        }
+
+        HTMLCode =
+        `<div style="display: flex;align-items: center;">
+        <div id="${type}" style="font-size: 300%;">${current}</div>
+        <div style="display: flex; flex-direction: column;align-items: flex-start;">
+        <button id="${type}up"  onclick="select${type}(${1}, ${min}, ${max})">▲</button>
+        <button id="${type}down" onclick="select${type}(${-1},${min}, ${max})">▼</button>
+        </div>`
+
+        return HTMLCode;
+    }
+
+    //Calls a function to create the elements with the given arguments.
+    function showDateSelector() {
+        document.getElementById('app').innerHTML =
+         createNumberSelector(30, 1, 31, 'Day')
+        + createNumberSelector(1, 1, 12, 'Month')
+        + createNumberSelector(2023, 2020, 2025, 'Year')
+
+}
+    //Grabs the values of the elements making up the date, and assigns them to the 
+    function getDate(){
+        
+        document.getElementById("dato").innerHTML = 
+         `
+        ${document.getElementById("Day").textContent}.
+        ${document.getElementById("Month").textContent}.
+        ${document.getElementById("Year").textContent}
+        `
+    }
+    
+    
+    //Changes the day/month/year and disables the appropriate buttons once the min/max is reached.
+    function selectDay(change, min, max) {
+        
+        (change == 1 && currentDay != max) ? currentDay++ : 
+        (change == -1 && currentDay != min) ? currentDay-- : 
+        console.log("Something went wrong..")//Chained Ternary operator, need something at the end..
+        
+        document.getElementById("Day").innerHTML = `${currentDay}`
+        document.getElementById("Daydown").disabled = currentDay == min;
+        document.getElementById("Dayup").disabled = currentDay == max;
+       
+    }
+    function selectMonth(change, min, max) {
+        
+        (change == 1 && currentMonth != max) ? currentMonth++ : 
+        (change == -1 && currentMonth != min) ? currentMonth-- : 
+        console.log("Something went wrong..")
+        
+        document.getElementById("Month").innerHTML = `${currentMonth}`
+        document.getElementById("Monthdown").disabled = currentMonth == min;
+        document.getElementById("Monthup").disabled = currentMonth == max;
+    }
+
+    function selectYear(change, min, max) {
+       
+        (change == 1 && currentYear != max) ? currentYear++ : 
+        (change == -1 && currentYear != min) ? currentYear-- : 
+        console.log("Something went wrong..")
+        
+        document.getElementById("Year").innerHTML = `${currentYear}`
+        document.getElementById("Yeardown").disabled = currentYear == min;
+        document.getElementById("Yearup").disabled = currentYear == max;
+
+    }
+
+</script>
 </body>
 </html>

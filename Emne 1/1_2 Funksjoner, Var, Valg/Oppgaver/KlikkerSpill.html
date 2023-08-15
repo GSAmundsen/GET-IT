@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Lag klikker spill:
+    En knapp øker antall poeng med 1
+    Poengsummen må vises fra 0 og etter hvert trykk
+    Oppgraderingsknapp - Koster 10poeng (disabled til man har nok poeng) - Øker poeng-pr-klikk med +1 -->
+    
+<div id="app"></div>
+
+
+    <script>
+
+        let points = 0;
+        let addpoints = 1;
+        let upgradeCost = 10;
+        let upgradeCostModifier = 1.5
+
+        //Creates the elements we need, Upgradebutton starts disabled since we cant afford an upgrade at start
+        displayGame()
+        function displayGame() {
+            
+            document.getElementById('app').innerHTML = /*HTML*/ `
+            <h3 id="pointsText">0</h3>
+            <button id="pointsGained" onclick="pointsCounter()">Points +${addpoints}</button>
+            <button disabled id="UpgradeButton" onclick="upgradePointsGained()">Upgrade -${upgradeCost}</button>
+            `  
+        }
+
+        //Adds points and updates elements.
+        function pointsCounter() {
+            points += addpoints;
+            document.getElementById('pointsText').innerHTML = `${points}`
+            document.getElementById('UpgradeButton').disabled = canAffordUpgrade();
+        }
+        
+        //Returns true/false if we can afford and upgrade or not
+        function canAffordUpgrade(){
+            return(points < upgradeCost)
+        }
+
+        //Upgrades the amount of points gained pr click, updates the cost of the next upgrade, and updates elements.
+        function upgradePointsGained() {
+            points -= upgradeCost
+            upgradeCost = Math.floor(upgradeCost * upgradeCostModifier)
+            addpoints++
+
+            document.getElementById('pointsText').innerHTML = `${points}`
+            document.getElementById('UpgradeButton').disabled = canAffordUpgrade();
+            document.getElementById('UpgradeButton').innerHTML = `Upgrade -${upgradeCost}`
+            document.getElementById('pointsGained').innerHTML = `Points +${addpoints}`
+        }
+
+    </script>
+</body>
+</html>

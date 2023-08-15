@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .app{
+            display: grid;
+            grid-template-columns: 250px 300px 250px;
+            align-content: center;
+            justify-content: center;
+            text-align: center;
+            
+        }
+        .app div{
+            border: 1px solid black;
+        }
+
+        .app button{
+            width: 75px;
+            height: 75px;
+        }
+    
+    </style>
+</head>
+<body>
+    
+    <div class="app">
+        <div class="left">
+            <h2 id="computerName"></h2>
+            <h3 id="computerScoreText">Score:<br>0</h3>
+            <h3 id="computerChoiceText"></h3>
+        </div>
+        <div class="center">
+            <h2 id="lastWinner">Hvem vinner?</h2>
+            <h3>Ditt Valg</h3>
+            <button onclick="playerSelectSign('Stein')">Stein</button>
+            <button onclick="playerSelectSign('Saks')">Saks</button>
+            <button onclick="playerSelectSign('Papir')">Papir</button>
+        </div>
+        
+        <div class="right">
+            <h2 id="playersName"></h2>
+            <h3 id="playerScoreText">Score:<br>0</h3>
+            <h3 id="playerChoiceText"></h3>
+        </div>
+        
+    </div>
+
+    <script>
+        const compName = "StSaPa-9000 mk.2"
+        const playerName = "Steinar Papirsachsen"
+        let playerScore = 0;
+        let computerScore = 0;
+
+        // Sets the names at the start
+        setNames()
+
+        function setNames(){
+            document.getElementById("computerName").innerHTML = `${compName}`
+            document.getElementById("playersName").innerHTML = `${playerName}`
+        }
+
+        // Returns a random int between min, max(inclusive)
+        function getRandomNumber(min, max){
+            return min + Math.floor(Math.random()* (max - min +1));
+            
+        }
+
+        //The computer selects a sign
+        function computerSelectSign(num){
+            return num == 1 ? 'Stein' : num == 2 ? 'Saks' : 'Papir'
+            
+        }
+
+        //the player selects a sign using buttons, the computer selects a sign, then the evaluation begins
+        function playerSelectSign(sign){
+            evaluateSigns(computerSelectSign(getRandomNumber(1,3)), sign)
+
+        }
+
+        //evaluates the choices, and updates the elements with the winner, looser (or draw) and scores.
+        function evaluateSigns(comp, player){
+            let winner;
+            if(comp == "Stein" && player == "Stein" ||
+                comp == "Saks" && player == "Saks" ||
+                comp == "Papir" && player == "Papir"){
+
+                winner = "Uavgjort!"
+            }else if(comp == "Stein" && player == "Saks" ||
+                    comp == "Papir" && player == "Stein" ||
+                    comp == "Saks" && player == "Papir"){
+
+                winner = `${compName} Vant!`
+                computerScore++
+                    
+            }else{
+                winner = `${playerName} Vant!`
+                playerScore++
+            }
+
+            document.getElementById("lastWinner").innerHTML = `${winner}`
+            document.getElementById("computerChoiceText").innerHTML = `${comp}`
+            document.getElementById("playerChoiceText").innerHTML = `${player}`
+            document.getElementById("playerScoreText").innerHTML = `Score:<br>${playerScore}`
+            document.getElementById("computerScoreText").innerHTML = `Score:<br>${computerScore}`
+        }
+        
+
+
+
+
+
+
+    </script>
+</body>
+</html>
