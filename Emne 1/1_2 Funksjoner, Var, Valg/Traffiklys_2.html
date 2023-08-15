@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #trafficLight {
+        width: 3rem;
+        height: 10rem;
+        display: flex;
+        flex-direction: column;
+        background-color: black;
+        padding: 1rem;
+        gap: 1rem;
+      }
+
+      div.light {
+        background-color: red;
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+
+
+    <div id="trafficLight">
+    </div>
+    <button onclick="goToNextPhase()">Neste</button>
+    
+
+    <script>
+        let phase = 0;
+
+        drawTrafficLight(true, false, false)
+
+        function drawTrafficLight(red, yellow, green)
+        {
+
+            defaultColor = `<div class="light" style="background-color: grey"></div>`
+
+            if(red){
+                redHTML = `<div class="light" style="background-color: red"></div>`
+            }else{
+                redHTML = defaultColor;
+            }
+            if(yellow){
+                yellowHTML = `<div class="light" style="background-color: yellow"></div>`
+            }else{
+                yellowHTML = defaultColor;
+            }
+            if(green){
+                greenHTML = `<div class="light" style="background-color: green"></div>`
+            }else{
+                greenHTML = defaultColor;
+            }
+
+            document.getElementById("trafficLight").innerHTML =/*HTML*/ `${redHTML} ${yellowHTML} ${greenHTML}`
+            
+        }
+
+        function goToNextPhase(){
+            
+            if(phase == 0){
+                drawTrafficLight(true,false,false)
+            }else if(phase == 1){
+                drawTrafficLight(true,true,false)
+            }else if(phase == 2){
+                drawTrafficLight(false,false,true)
+            }else if(phase == 3){
+                drawTrafficLight(false,true,false)
+                phase = 0;
+                //Exits the function, and doesnt increment from 0 to 1. This way, the next "phase" will trigger the drawTrafficLight at phase 0.
+                return;
+            }
+            phase++
+            
+           
+        }
+      
+
+    </script>
+  </body>
+</html>

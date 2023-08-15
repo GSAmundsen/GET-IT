@@ -1,0 +1,415 @@
+<!-- //Bilder Lotto -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #board{
+            display: grid;
+            grid-template-columns: repeat(4, 200px);
+            grid-template-rows: repeat(4, 200px);
+        }
+
+        #board > div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid gray;
+            background-color: darkgray;
+        }
+        img{
+            width: 100%;
+        }
+
+        .Show >img{
+            visibility: visible;
+        }
+
+        .Hide >img{
+            visibility: hidden;
+        }
+
+    
+
+       
+        
+
+
+    </style>
+</head>
+<body>
+    <div id="board">
+
+    </div>
+
+
+    <script>
+        let first
+        showCells()
+
+        function showCells(){
+            document.getElementById("board").innerHTML = /*HTML*/
+              `
+              <div class="Hide" id="hund1" onclick="hund1()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/dog.jpg?raw=true"/></div>
+              <div class="Hide" id="frosk1" onclick="frosk1()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/frog.jpg?raw=true"/></div>
+              <div class="Hide" id="hest1" onclick="hest1()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/horse.jpg?raw=true"/></div>
+              <div class="Hide" id="hane1" onclick="hane1()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/chicken.jpg?raw=true"/></div>
+              <div class="Hide" id="edderkopp1" onclick="edderkopp1()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/spider.jpg?raw=true"/></div>
+              <div class="Hide" id="frosk2" onclick="frosk2()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/frog.jpg?raw=true"/></div>
+              <div class="Hide" id="edderkopp2" onclick="edderkopp2()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/spider.jpg?raw=true"/></div>
+              <div class="Hide" id="tiger1" onclick="tiger1()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/tiger.jpg?raw=true"/></div>
+              <div class="Hide" id="hane2" onclick="hane2()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/chicken.jpg?raw=true"/></div>
+              <div class="Hide" id="hund2" onclick="hund2()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/dog.jpg?raw=true"/></div>
+              <div class="Hide" id="elefant1" onclick="elefant1()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/elephant.jpg?raw=true"/></div>
+              <div class="Hide" id="katt1" onclick="katt1()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/cat.gif?raw=true"/></div>
+              <div class="Hide" id="katt2" onclick="katt2()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/cat.gif?raw=true"/></div>
+              <div class="Hide" id="elefant2" onclick="elefant2()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/elephant.jpg?raw=true"/></div>
+              <div class="Hide" id="hest2" onclick="hest2()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/horse.jpg?raw=true"/></div>
+              <div class="Hide" id="tiger2" onclick="tiger2()">
+                <img src="https://github.com/GetAcademy/PictureLottox/blob/main/img/tiger.jpg?raw=true"/></div>`
+
+            }
+
+        function hund1()
+        {
+            document.getElementById("hund1").className = "Show"
+
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+       
+        }
+        function hund2()
+        {
+            document.getElementById("hund2").className = "Show"
+
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+
+        }
+
+        function frosk1()
+        {
+            document.getElementById("frosk1").className = "Show"
+
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+        }
+
+        function frosk2()
+        {
+            document.getElementById("frosk2").className = "Show"
+
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+        }
+
+        function hest1()
+        {
+            document.getElementById("hest1").className = "Show"
+
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+        }
+
+        function hest2()
+        {
+            document.getElementById("hest2").className = "Show"
+
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+        }
+
+        function hane1()
+        {
+            document.getElementById("hane1").className = "Show"
+            
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+        }
+
+        function hane2()
+        {
+            document.getElementById("hane2").className = "Show"
+            
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+        }
+
+        function edderkopp1()
+        {
+            document.getElementById("edderkopp1").className = "Show"
+            
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+        }
+
+        function edderkopp2()
+        {
+            document.getElementById("edderkopp2").className = "Show"
+            
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+        }
+
+        function tiger1()
+        {
+            document.getElementById("tiger1").className = "Show"
+            
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+        }
+
+        function tiger2()
+        {
+            document.getElementById("tiger2").className = "Show"
+
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+        }
+
+        function elefant1()
+        {
+            document.getElementById("elefant1").className = "Show"
+            
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+        }
+
+        function elefant2()
+        {
+            document.getElementById("elefant2").className = "Show"
+            
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("katt1").className = "Hide"
+            document.getElementById("katt2").className = "Hide"
+        }
+
+        function katt1()
+        {
+            document.getElementById("katt1").className = "Show"
+            
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+        }
+
+        function katt2()
+        {
+            document.getElementById("katt2").className = "Show"
+            document.getElementById("hund1").className = "Hide"
+            document.getElementById("hund2").className = "Hide"
+            document.getElementById("frosk1").className = "Hide"
+            document.getElementById("frosk2").className = "Hide"
+            document.getElementById("hane1").className = "Hide"
+            document.getElementById("hane2").className = "Hide"
+            document.getElementById("hest1").className = "Hide"
+            document.getElementById("hest2").className = "Hide"
+            document.getElementById("tiger1").className = "Hide"
+            document.getElementById("tiger2").className = "Hide"
+            document.getElementById("edderkopp1").className = "Hide"
+            document.getElementById("edderkopp2").className = "Hide"
+            document.getElementById("elefant1").className = "Hide"
+            document.getElementById("elefant2").className = "Hide"
+        }
+
+
+        
+    </script>
+</body>
+</html>

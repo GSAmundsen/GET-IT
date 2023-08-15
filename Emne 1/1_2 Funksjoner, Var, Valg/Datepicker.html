@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+
+    </style>
+</head>
+<body>
+<div id="app">
+   
+</div>
+ <div id="dato">
+        <button onclick="getDate()">Gi meg en dato!</button>
+    </div>
+
+
+
+<script>
+    let currentDay;
+    let currentMonth;
+    let currentYear;
+
+    showDateSelector()
+    // Hvilken Dag/mnd det er, minimum dag/måned(1), max dag/måned(31 / 12), type(Day eller Month)
+    function createNumberSelector(current, min, max, type) {
+        let HTMLCode = ``;
+        let isDisabled = false;
+        
+        if(type == "Day"){
+            currentDay = current;
+        }
+        if(type =="Month"){
+            currentMonth = current;
+        }
+        if(type =="Year"){
+            currentYear = current;
+        }
+
+
+
+        HTMLCode =
+        `<div style="display: flex;align-items: center;">
+        <div id="${type}" style="font-size: 300%;"></div>
+        <div style="display: flex; flex-direction: column;align-items: flex-start;">
+        <button id="${type}up"  onclick="select${type}(${1}, ${min}, ${max})">▲</button>
+        <button id="${type}down" onclick="select${type}(${-1},${min}, ${max})">▼</button>
+        </div>`
+
+
+        
+
+        return HTMLCode;
+
+    }
+
+    function showDateSelector() {
+        document.getElementById('app').innerHTML =
+         createNumberSelector(30, 1, 31, 'Day')
+        + createNumberSelector(8, 1, 12, 'Month')
+        + createNumberSelector(2023, 2020, 2025, 'Year')
+
+        //Kun for å vise current verdier etter div'ene er laget. Ellers legges verdiene først til div'en etter man har endret dem.
+        document.getElementById("Day").innerHTML = `${currentDay}`;
+        document.getElementById("Month").innerHTML = `${currentMonth}`;
+        document.getElementById("Year").innerHTML = `${currentYear}`;
+
+}
+
+    function getDate(){
+        
+        document.getElementById("dato").innerHTML = `
+        ${document.getElementById("Day").textContent}.
+        ${document.getElementById("Month").textContent}.
+        ${document.getElementById("Year").textContent}`
+    }
+
+    function selectDay(change, min, max) {
+        
+        if(change == 1){
+            if(currentDay != max){
+                currentDay++
+                document.getElementById("Day").innerHTML = `${currentDay}`
+            }    
+        } 
+        if(change == -1){
+            if(currentDay != min){
+                currentDay--;
+                document.getElementById("Day").innerHTML = `${currentDay}`
+            }
+        
+        }
+        
+        if(currentDay == min){
+            document.getElementById("Daydown").disabled = true;
+        }else{
+            document.getElementById("Daydown").disabled = false;
+        }
+
+        if(currentDay == max){
+            document.getElementById("Dayup").disabled = true;
+        }else{
+            document.getElementById("Dayup").disabled = false;
+        }
+
+    }
+
+
+    
+    function selectMonth(change, min, max) {
+        
+        if(change == 1){
+            if(currentMonth != max){
+                currentMonth++
+                document.getElementById("Month").innerHTML = `${currentMonth}`
+            }    
+        } 
+        if(change == -1){
+            if(currentMonth != min){
+                currentMonth--;
+                document.getElementById("Month").innerHTML = `${currentMonth}`
+            }
+        
+        }
+        
+        if(currentMonth == min){
+            document.getElementById("Monthdown").disabled = true;
+        }else{
+            document.getElementById("Monthdown").disabled = false;
+        }
+
+        if(currentMonth == max){
+            document.getElementById("Monthup").disabled = true;
+        }else{
+            document.getElementById("Monthup").disabled = false;
+        }
+
+    }
+
+
+    function selectYear(change, min, max) {
+        
+        if(change == 1){
+            if(currentYear != max){
+                currentYear++
+                document.getElementById("Year").innerHTML = `${currentYear}`
+            }    
+        } 
+        if(change == -1){
+            if(currentYear != min){
+                currentYear--;
+                document.getElementById("Year").innerHTML = `${currentYear}`
+            }
+        
+        }
+        
+        if(currentYear == min){
+            document.getElementById("Yeardown").disabled = true;
+        }else{
+            document.getElementById("Yeardown").disabled = false;
+        }
+
+        if(currentYear == max){
+            document.getElementById("Yearup").disabled = true;
+        }else{
+            document.getElementById("Yearup").disabled = false;
+        }
+
+    }
+
+
+
+
+
+
+   
+
+</script>
+</body>
+</html>

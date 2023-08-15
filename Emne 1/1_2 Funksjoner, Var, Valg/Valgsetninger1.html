@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--
+        "Valgsetninger 1"
+
+        - Sammenligne tall og tekst ==, !=, <, <=, >, >=, ===, !==
+        - Logiske verdier true og false
+        - Enkle if-setninger
+
+        Dette åpner mange muligheter!
+         - en funksjon kan gjøre ulike valg ut fra p
+    -->
+    <div id="app"></div>
+
+    <script>
+        drawForm();
+
+        function drawForm() {
+            // drawTextField('fname', 'First Name');
+            // drawTextField('lname', 'Last Name');
+            // drawRangeField('zero2hundred', 'En til hundre');
+            drawField('fname', 'First Name', 'text');
+            drawField('lname', 'Last Name', 'text');
+            drawField('zero2hundred', 'En til hundre', 'range');
+            drawField('lname', 'Skriv inn et tall', 'number');
+            drawField('html', 'HTML', 'radio', 'fav_language');
+            drawField('css', 'CSS', 'radio', 'fav_language');
+            drawField('js', 'JavaScript', 'radio', 'fav_language');
+            
+            //Oppgavedel
+            drawField('vehicle1', 'vehicle1', 'checkbox', 'vehicle1', 'Bike')
+            drawField('vehicle2', 'vehicle2', 'checkbox', 'vehicle2', 'Car')
+            drawField('vehicle3', 'vehicle3', 'checkbox', 'vehicle3', 'Boat')
+        }        
+
+        function drawField(id, label, type, groupName, val) {
+            let minMaxStep = '';
+            let breakTag = '<br/>';
+            let labelTag = `<label for="${id}">${label}:</label>`;
+            let fieldTag = ` <input type="${type}" ${minMaxStep} id="${id}">`;
+            if (type == 'range') {
+                minMaxStep = 'min="1" max="100" step="1"';
+            }
+            
+            let html = label + breakTag + fieldTag + breakTag;
+            
+            if(type == 'radio'){
+                html = /*html*/` 
+                    <input type="${type}" name="${groupName}" id="${id}">
+                    <label for="${id}">${label}</label>
+                    <br/>
+                    `;
+            }
+            //Oppgavedel
+            if(type == 'checkbox')
+            {
+                html = /*HTML*/`
+                    <input type=${type} id=${id} name=${groupName} value=${val}>
+                    <label for=${groupName}>I have a ${val}</label><br/>
+                    `
+            }
+            document.getElementById('app').innerHTML += html;
+        }
+        
+    </script>
+
+
+</body>
+
+</html>

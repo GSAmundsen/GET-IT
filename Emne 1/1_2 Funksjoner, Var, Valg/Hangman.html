@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="hangman"></div>
+    <div id="guess"></div>
+    
+    
+
+    <script>
+    let theSecretWord = "";
+    let guessedWord = "";
+    let guessesRemaining = 5;
+    
+    createWord();   
+    
+    //Creates an input that takes a secret word from the user.
+    function createWord(){
+        document.getElementById("hangman").innerHTML = /*HTML*/`
+        <h3>Skriv inn et hemmelig ord<br> [Maks 20 bokstaver]</h3><input id='wordfield'type=text maxlength=20> 
+        <button onclick="setWord(document.getElementById('wordfield').value)">Enter</button>`;
+    }
+
+    //Sets the secret word. Sets a "blank" guessedWord that will hold the letters guessed correctly, in the correct position.
+    function setWord(word){
+        theSecretWord = word;
+        guessedWord = ''.padEnd(theSecretWord.length, '_');
+        showGuesses();
+    }
+
+    //Shows the players progress and remaining attempts, checks if the guessed word is correct.
+    function showGuesses(){
+        document.getElementById("hangman").innerHTML = /*HTML*/ `
+        <h3>Du har <u>${guessesRemaining}</u> forsøk igjen</h3>
+        <br><br>
+        ${guessedWord}`;
+        
+        if(guessedWord == theSecretWord){
+            document.getElementById("hangman").innerHTML = `<h2>Riktig! Ordet er ${theSecretWord}</h2>`
+        }else{
+            guessLetter();
+        }
+
+    }
+
+    //Provides an input field where the player inputs a character to test.
+    function guessLetter(){
+        document.getElementById("guess").innerHTML = /*HTML*/ `
+        <h3>Gjett en bokstav</h3>
+        <input id='myguess'type=text style="width:10px;" maxlength=1> 
+        <button onclick="evaluateHangman(document.getElementById('myguess').value)">Gjett</button>`;
+    }
+
+    //Gets a return value from the checkLetter function.
+    function evaluateHangman(letter){
+        guessedWord = checkLetter(theSecretWord,guessedWord,letter);
+        
+        showGuesses();
+        
+    }
+
+    //Checks the letter guessed by the player, comparing it to the secret word, and returns a modified string
+    //Still trying to get this into a loop...
+    function checkLetter(secretText, currentText, guessedLetter){
+        const index = secretText.indexOf(guessedLetter);
+        if(index == -1) return currentText;
+        const currentTextBeforeGuessedLetter = currentText.substring(0, index);     
+        const currentTextAfterGuessedLetter = currentText.substring(index + 1);
+        const secretTextAfterGuessedLetter = secretText.substring(index + 1);
+        return currentTextBeforeGuessedLetter + guessedLetter 
+            + checkLetter(secretTextAfterGuessedLetter, currentTextAfterGuessedLetter, guessedLetter);
+}
+
+    // function evaluateLoop(){
+    //     for (let i = 0; i < secretText.length; i++) {
+    //         if(secretText[i] == guessedLetter){
+    //             console.log(secretText[i]+i) //Getting the correct index, just need to 'insert them' into the string
+    //             guessedWord = guessedWord.substring guessedLetter;
+    //         }
+            
+    //     }
+    //     return guessedWord;
+
+
+    // }
+
+
+    
+    </script>
+</body>
+</html>
