@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<!-- Vi trenger
+Et rutenett på 2x2
+En funksjon som lager html, med selectedIndex som parameter
+Valgt rute skal være gul
+Alle andre ruter skal være grå
+selectedRandomNumber genererer tilfeldig index(rute)
+Bruker trykker på ny rute, velges ny index -->
+
+    <style>
+        .squares {
+            display: grid;
+            align-content: center;
+            justify-content: center;
+            height: 100vh;
+            grid-template-columns: 250px 250px;
+            grid-template-rows: 250px 40px 250px;
+            grid-template-areas: 'en to'
+                                 'cent cent'
+                                'tre fire';
+
+            
+        }
+        .squareMiddle {
+            text-align: center;
+            border: 1px solid black;
+            grid-area: cent;
+            background-color: lightgrey;
+            font-size: 26pt;
+        }
+        .squareOne {
+            border: 1px solid black;
+            grid-area: en;
+            background-color: grey;
+        }
+        .squareTwo {
+            border: 1px solid black;
+            grid-area: to;
+            background-color: grey;
+        }
+        .squareThree {
+            border: 1px solid black;
+            grid-area: tre;
+            background-color: grey;
+        }
+        .squareFour {
+            border: 1px solid black;
+            grid-area: fire;
+            background-color: grey;
+        }
+        /* Sets the div that ends up being selected, to yellow. */
+        #selected{
+            background-color: yellow;
+        }
+
+
+    </style>
+
+</head>
+<body>
+    <div id="app"></div>
+
+
+    <script>
+        // Global variable to save the previous reaction time.
+        let previousTime = new Date().getTime();
+
+        drawSquares(getRandomNumber(1,4))
+
+        // Uses a ternery operator to assign the correct div to the variables. either its assigned the "selected" Id and onClick function, or its not.
+        function drawSquares(selectedIndex){
+            let div1 = selectedIndex == 1 ? '<div id="selected" class="squareOne" onclick=(drawSquares(getRandomNumber(1,4)))></div>' : '<div class="squareOne"></div>'
+            let div2 = selectedIndex == 2 ? '<div id="selected" class="squareTwo" onclick=(drawSquares(getRandomNumber(1,4)))></div>' : '<div class="squareTwo"></div>'
+            let div3 = selectedIndex == 3 ? '<div id="selected" class="squareThree" onclick=(drawSquares(getRandomNumber(1,4)))></div>' : '<div class="squareThree"></div>'
+            let div4 = selectedIndex == 4 ? '<div id="selected" class="squareFour" onclick=(drawSquares(getRandomNumber(1,4)))></div>' : '<div class="squareFour"></div>'
+
+            document.getElementById('app').innerHTML /*HTML*/ = `
+            <div class="squares">
+            ${div1}${div2}${div3}${div4}
+            <div class="squareMiddle">${timeBetween()}</div>
+            </div>`  
+        }
+
+        function getRandomNumber(min, max) {
+        return min + Math.floor(Math.random() * (max - min + 1));
+        }
+
+        //Returns the result of the time between when the squares where drawn, and when the player clicked the correct square
+        function timeBetween(){               
+            let newTime = new Date().getTime()
+            let currentTime = (newTime - previousTime) / 1000;
+            previousTime = newTime;
+            return currentTime;
+        }
+
+    </script>
+</body>
+</html>

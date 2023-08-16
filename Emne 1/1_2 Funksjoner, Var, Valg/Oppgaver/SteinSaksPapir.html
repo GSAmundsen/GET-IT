@@ -84,11 +84,9 @@
         //evaluates the choices, and updates the elements with the winner, looser (or draw) and scores.
         function evaluateSigns(comp, player){
             let winner;
-            if(comp == "Stein" && player == "Stein" ||
-                comp == "Saks" && player == "Saks" ||
-                comp == "Papir" && player == "Papir"){
-
+            if(comp == player){
                 winner = "Uavgjort!"
+                
             }else if(comp == "Stein" && player == "Saks" ||
                     comp == "Papir" && player == "Stein" ||
                     comp == "Saks" && player == "Papir"){
