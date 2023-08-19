@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        div.square {
+            border: 1px solid gray
+        }
+
+        div.board {
+            display: grid;
+            grid-template-columns: repeat(2, 10rem);
+            grid-template-rows: repeat(2, 10rem);
+        }
+
+        div.buttons {
+            width: 20rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img {
+            width: 90%;
+        }
+
+        div.square{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div id="app"></div>
+
+
+    <script>
+        //Model
+        let imageLogo = "<img src='https://getacademy.no/hubfs/GET_RGB_logo-01-2.png' />"
+        let gridIndex = 0;
+
+        //Controller
+        function moveVertical(change){
+            gridIndex += change*2
+            console.log(gridIndex)
+            updateView()
+        }
+
+        function moveHorizontal(change){
+            gridIndex += change
+            updateView()
+        }
+
+        updateView()
+        //View
+        function updateView(){
+            document.getElementById('app').innerHTML = /*HTML*/`
+            <div class="board">
+                <div class="square">${gridIndex == 0 ? imageLogo: ""}
+                </div>
+                <div class="square">${gridIndex == 1 ? imageLogo: ""}
+                </div>
+                <div class="square">${gridIndex == 2 ? imageLogo: ""}
+                </div>
+                <div class="square">${gridIndex == 3 ? imageLogo: ""}
+                </div>
+            </div>
+            <div class="buttons">
+                <button ${gridIndex == 0 || gridIndex == 1 ? "disabled" : ""} onclick="moveVertical(-1)">▲</button>
+                <div>
+                    <button ${gridIndex == 0 || gridIndex == 2 ? "disabled" : ""} onclick="moveHorizontal(-1)">◀</button>
+                    <button ${gridIndex == 1 || gridIndex == 3 ? "disabled" : ""} onclick="moveHorizontal(1)">▶</button>
+                </div>
+                <button  ${gridIndex == 2 || gridIndex == 3 ? "disabled" : ""} onclick="moveVertical(1)">▼</button>
+            </div>
+            `;
+        }
+    </script>
+    
+</body>
+</html>
