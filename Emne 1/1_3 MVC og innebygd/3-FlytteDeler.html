@@ -32,12 +32,10 @@
 
 
         //Controller
-        function changeHead(change){
-           
+        function changeHead(change){           
             headIndex += change
             if(headIndex < 1){headIndex = 4}
             else if (headIndex >4){headIndex = 1}
-
             updateView();
         }
 
@@ -45,7 +43,6 @@
             bodyIndex += change
             if(bodyIndex < 1){bodyIndex = 4}
             else if (bodyIndex >4){bodyIndex = 1}
-
             updateView();
         }
 
@@ -53,7 +50,6 @@
             legsIndex += change
             if(legsIndex < 1){legsIndex = 4}
             else if(legsIndex >4){legsIndex = 1}
-
             updateView();
         }
 
@@ -62,6 +58,17 @@
             bodyIndex = 1;
             feetIndex = 1;
             updateView();
+        }
+
+        function randomSelection(){
+            headIndex = randomNumer(1,4);
+            bodyIndex = randomNumer(1,4);
+            legsIndex = randomNumer(1,4);
+            updateView();
+        }
+
+        function randomNumer(min, max){
+            return min + Math.floor(Math.random() * max);
         }
 
 
@@ -87,6 +94,7 @@
                 </div>
                 <div class="bodyPart">
                     <button onclick="resetCharacter()">Reset</button>
+                    <button onclick="randomSelection()">Random</button>
                 </div>
             </div>
             

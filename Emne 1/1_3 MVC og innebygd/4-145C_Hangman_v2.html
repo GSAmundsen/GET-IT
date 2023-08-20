@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .inputContainer{
+            width: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <div id="hangman"></div>
+    <div id="guess"></div>
+    
+    
+
+    <script>
+        //Model
+    let secretWords = [
+        "Kristiansand",
+        "Stavanger",
+        "Sandefjord",
+        "Fredrikstad",
+        "Lillehammer",
+        "Kongsvinger",
+        "Hønefoss",
+        "Ålesund",
+        "Molde",
+        "Tromsø",
+        "Kristiansund",
+        "Sarpsborg",
+        "Tønsberg",
+        "Drammen",
+        "Haugesund",
+        "Vennesla",
+        "Langesund",
+        "Lillestrøm",
+        "Sandnes"];
+    
+    let guessedLetters = [];
+    let theSecretWord = "";
+    let guessedWord = "";
+    const MaxGuessesAllowed = 5;
+    let guessesRemaining = MaxGuessesAllowed;
+    
+
+    function setWord(){
+        theSecretWord = secretWords[Math.floor(Math.random() * secretWords.length)].toUpperCase()
+        guessedWord = "_".repeat(theSecretWord.length)
+        console.log(theSecretWord)
+    }
+
+    function checkCorrect(guess){
+        
+        // Temporary variable to store the array created from guessedWord, there is no .replaceAt(index) in strings.
+        let word = Array.from(guessedWord)
+        
+        //If a match is found in the secretWord, we replace the character at the same index in the new guessedWord array
+        for(let l = 0; l<theSecretWord.length; l++){
+            if(theSecretWord[l] == guess){
+                word[l] = guess}
+        }
+        //Converts the temporary array back into a string.
+        guessedWord = word.toString().replaceAll(",","");
+
+        if(theSecretWord.indexOf(guess) == -1){guessesRemaining--}
+        
+        //If no matching letter was found, add it to the list of guessed letters.
+        if(guessedWord.indexOf(guess) == -1 && guessedLetters.indexOf(guess) == -1){
+            guessedLetters.push(guess)
+        }
+
+        updateView()
+
+    }
+
+    function resetGame(){
+        theSecretWord = "";
+        guessesRemaining = MaxGuessesAllowed;
+        guessedLetters = []
+        updateView()
+    }
+ 
+
+    //View
+    updateView()
+    function updateView(){
+        if(theSecretWord == ""){
+            setWord()
+        }
+        document.getElementById("app").innerHTML = /*HTML*/ `
+        <div>
+            <h3>Du har <u>${guessesRemaining}</u> forsøk igjen</h3>
+            <br>
+            <h4>>${guessedLetters}<</h4>
+            <br>
+            ${guessedWord}
+
+            <div class="inputContainer" style="display: ${(guessesRemaining > 0 && theSecretWord != guessedWord) ? '' : 'none'};">
+                <h4>Gjett en bokstav: </h3>
+                    <div>
+                    <input id="myguess"type=text style="width:10px;" maxlength=1> 
+                    <button onclick="checkCorrect(document.getElementById('myguess').value.toUpperCase())">Gjett</button>
+                    </div>
+            </div>
+            <div style="display: ${guessesRemaining <= 0 || 'none'};">
+                <h4>Du klarte det ikke.. Svaret var ${theSecretWord}.</h4>
+                <button onclick="resetGame()">Prøv igjen!</button>
+            </div>
+            <div style="display: ${theSecretWord == guessedWord ? '':'none'};">
+                <h4>Du klarte det! Svaret var ${theSecretWord}.</h4>
+                <button onclick="resetGame()">Start på nytt?</button>
+            </div>
+                
+            
+        </div>
+        
+        `        
+    }
+
+    </script>
+</body>
+</html>
