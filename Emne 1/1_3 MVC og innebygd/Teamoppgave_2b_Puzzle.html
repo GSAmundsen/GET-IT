@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./CSS/TeamOpgStyles.css" />
+  </head>
+
+   <body>
+    <div id="app" class="main">
+
+      <div id="board"></div>
+      <div
+        id="buttons"        
+      ></div>
+    </div>
+
+<script>
+
+      /*
+      Position "Matrix":
+       04 03 02 01 00
+       09 08 07 06 05
+       14 13 12 11 10
+       19 18 17 16 15
+       24 23 22 21 20
+      */
+
+    let numberOfPiecesPlaced = 0;
+    let numberOfRowsPlaced = 0;
+    let counter = 0;
+    const normalPiece = [true,true,true,true];
+    const withoutTop = [false,true,true,true];
+    const withoutRight = [true,false,true,true];
+    const withoutBottom = [true,true,false,true];
+    const withoutLeft = [true,true,true,false];
+    const withoutLeftTop = [false,true,true,false];
+    const withoutRightTop = [false,false,true,true];
+    const withoutBottomLeft = [true,true,false,false];
+    const withoutBottomRight = [true,false,false,true];
+
+    const normalPiecePlaces = [6,7,8,11,12,13,16,17,18];
+    const withoutTopPlaces = [1,2,3];
+    const withoutLeftPlaces = [9,14,19];
+    const withoutBottomPlaces = [21,22,23];
+    const withoutRightPlaces = [5,10,15];
+    const withoutTopLeftPlaces = [4];
+    const withoutTopRightPlaces = [0];
+    const withoutBottomLeftPlaces = [24];
+    const withoutBottomRightPlaces = [20];
+
+    
+
+    function addPieceToBoard(pieceName){
+      if(pieceName == 'normal' && normalPiecePlaces.includes(numberOfPiecesPlaced)){
+          addPiece(normalPiece);
+        }else if(pieceName == 'noTop' && withoutTopPlaces.includes(numberOfPiecesPlaced)){
+          addPiece(withoutTop);
+        }else if(pieceName == 'noRight' && withoutRightPlaces.includes(numberOfPiecesPlaced)){
+          addPiece(withoutRight);
+        }else if(pieceName == 'noBottom' && withoutBottomPlaces.includes(numberOfPiecesPlaced)){
+          addPiece(withoutBottom);
+        }else if(pieceName == 'noLeft' && withoutLeftPlaces.includes(numberOfPiecesPlaced)){
+          addPiece(withoutLeft);
+        }else if(pieceName == 'noTopRight' && withoutTopRightPlaces.includes(numberOfPiecesPlaced)){
+          addPiece(withoutRightTop);
+        }else if(pieceName == 'noTopLeft' && withoutTopLeftPlaces.includes(numberOfPiecesPlaced)){
+          addPiece(withoutLeftTop);
+        }else if(pieceName == 'noBottomRight' && withoutBottomRightPlaces.includes(numberOfPiecesPlaced)){
+          addPiece(withoutBottomRight);
+        }else if(pieceName == 'noBottomLeft' && withoutBottomLeftPlaces.includes(numberOfPiecesPlaced)){
+          addPiece(withoutBottomLeft);
+        }
+      }
+
+
+    function addPiece(pieceConf){
+
+      if (counter >= 5) {
+          numberOfRowsPlaced++;
+          counter = 0;
+        }
+
+        let leftPos = 24 - (6 * (numberOfPiecesPlaced % 5));
+        let topPos = (numberOfRowsPlaced % 5) * 6;
+
+        addPuzzlePiece("board",pieceConf[0],pieceConf[1],pieceConf[2],pieceConf[3],"",
+          (numberOfPiecesPlaced % 2) + 1,
+          leftPos,
+          topPos);
+
+        numberOfPiecesPlaced++;
+        counter++;
+      }
+
+      // Knappene som legger til puzzle pieces
+    addPuzzlePiece("buttons",true,true,true,true,"addPieceToBoard('normal')",0);
+    addPuzzlePiece("buttons",false,true,true,true,"addPieceToBoard('noTop')",0);
+    addPuzzlePiece("buttons",true,false,true,true,"addPieceToBoard('noRight')",0);
+    addPuzzlePiece("buttons",true,true,false,true,"addPieceToBoard('noBottom')",0);
+    addPuzzlePiece("buttons",true,true,true,false,"addPieceToBoard('noLeft')",0);
+    addPuzzlePiece("buttons",false,true,true,false,"addPieceToBoard('noTopLeft')",0);
+    addPuzzlePiece("buttons",false,false,true,true,"addPieceToBoard('noTopRight')",0);
+    addPuzzlePiece("buttons",true,true,false,false,"addPieceToBoard('noBottomLeft')",0);
+    addPuzzlePiece("buttons",true,false,false,true,"addPieceToBoard('noBottomRight')",0);
+
+
+    //View ?
+    function addPuzzlePiece(
+      toId,
+      hasTop,
+      hasRight,
+      hasBottom,
+      hasLeft,
+      onclick,
+      color,
+      leftPosition,
+      topPosition
+    ) {
+      let style = "";
+      if (leftPosition !== undefined) {
+        style = `left: ${leftPosition + 0.5}em; top: ${topPosition + 0.5}em`;
+      }
+
+      document.getElementById(toId).innerHTML += /*HTML*/ `
+
+              <div class="jigsaw${color}" onclick="${onclick}" style="${style}">
+                  ${hasTop ? `<span class="t"></span>` : ""}
+                  ${hasRight ? `<span class="r"></span>` : ""}
+                  ${hasBottom ? `<span class="b"></span>` : ""}
+                  ${hasLeft ? `<span class="l"></span>` : ""}
+              </div>
+              
+          `;
+    }
+
+  </script>
+</body>
+</html>

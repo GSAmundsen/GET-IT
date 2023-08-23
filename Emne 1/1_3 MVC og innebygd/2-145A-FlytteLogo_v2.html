@@ -41,6 +41,12 @@
 
 
     <script>
+    /*
+    1.4.5.A
+        Ta utgangspunkt i denne helt enkle koden: getacademy.github.io/StartIT/MoveLogo/index.html 
+        Bruk MVC; ha en variabel for hvor logoen er og lag en funksjon som tegner opp riktig. 
+        Programmer en eller flere kontrollerfunksjoner for å kunne flytte logoen på samme måte som i utgangspunktet.
+    */
         //Model
         let imageLogo = "<img src='https://getacademy.no/hubfs/GET_RGB_logo-01-2.png' />"
         let gridIndex = 0;
@@ -48,7 +54,6 @@
         //Controller
         function moveVertical(change){
             gridIndex += change*2
-            console.log(gridIndex)
             updateView()
         }
 

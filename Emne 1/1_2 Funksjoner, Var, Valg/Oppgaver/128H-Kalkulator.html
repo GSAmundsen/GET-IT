@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style type="text/css">
+
+        
+        .main > div {
+            float: left;
+            background-color: beige;
+            width: 50px;
+            height: 50px;
+            padding: 10px;
+            margin: 10px;
+            text-align: center;
+            vertical-align: middle;
+            font-family: helvetica;
+            font-size: 200%;
+            border: #bbbbaa solid 4px;
+            border-radius: 10px;
+        }
+
+            div.resultBox {
+                width: 344px;
+                text-align: right;
+            }
+
+            div.firstInRow {
+                clear: left;
+            }
+    </style>
+
+</head>
+<body>
+    <div id="app" class="main"></div>
+
+    <script>
+    /*
+    128H - Lag en enkel kalkulator med knapper for sifrene 0-9, for regneoperasjonene +, -, * og /, for = og for å nulle ut. 
+    Trykker man på et siffer, skal det legges til på "skjermen". Når man trykker på en regneoperasjon, må man huske tallet som var på skjermen, 
+    blanke ut - og så la brukeren skrive inn neste tall. Når brukeren trykke =, må man huske valgt regneoperasjon og det første tallet og regne ut 
+    sammen med tallet på skjermen. Så viser man resultatet på "skjermen".
+    */
+        let inputNumberString = "";
+        let numbersInField = "";
+        let calcResult = "";
+    
+        function addCharacter(y) {  
+            //lowercase x produced some issues, didnt trigger the if(). Uppercase works.
+            if(y == "X" || y == '÷' || y == '-' || y == '+'){
+                numbersInField = '';
+            }else{
+                numbersInField += y;
+            }
+            inputNumberString += y;
+            updateView();
+        }
+    
+        function calculate() {
+            numbersInField = eval(inputNumberString.replace('X', '*').replace('÷', '/'));
+            updateView();
+        }
+        function clearResult() {
+            numbersInField = "";
+            inputNumberString = "";
+            updateView();
+        }
+    
+        updateView()
+        function updateView(){
+            document.getElementById("app").innerHTML /*HTML*/ = `
+            <div id="resultBox" class="resultBox" id="screen">${numbersInField}</div>
+    
+            <div class="firstInRow" onclick="addCharacter(7)">7</div>
+            <div onclick="addCharacter(8)">8</div>
+            <div onclick="addCharacter(9)">9</div>
+            <div onclick="addCharacter('÷')">÷</div>
+                        
+            <div class="firstInRow" onclick="addCharacter(4)">4</div>
+            <div onclick="addCharacter(5)">5</div>
+            <div onclick="addCharacter(6)">6</div>
+            <div onclick="addCharacter('X')">x</div>
+                        
+            <div class="firstInRow" onclick="addCharacter(1)">1</div>
+            <div onclick="addCharacter(2)">2</div>
+            <div onclick="addCharacter(3)">3</div>
+            <div onclick="addCharacter('-')">-</div>
+                        
+            <div class="firstInRow" onclick="addCharacter(0)">0</div>
+            <div onclick="clearResult();">C</div>
+            <div onclick="calculate()">=</div>
+            <div onclick="addCharacter('+')">+</div>
+            `}
+    
+    </script>
+    
+    </body>
+    </html>

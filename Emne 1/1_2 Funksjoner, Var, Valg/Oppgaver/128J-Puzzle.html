@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main{
+            width: 300px;
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            border: 3px solid black;
+            background-color: lightgrey;
+        }
+        .square{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid black;
+            border-radius: 8px;
+            background-color: white;
+            font-size: large;
+        }
+
+        .empty{
+            display: hidden;
+            color: transparent;
+        }
+        
+        
+
+        
+    </style>
+</head>
+<body>
+    <div id="app" class="main">
+        
+
+    </div>
+
+
+    <script>
+        /*
+        Lag en grid på 3x3 med tallene 0-8 og 1 blank rute.
+        Alle rutene skal ha en "systematisk" is (square1, square2 etc)
+        Ved onClick skal ruten bytte plass med den blanke, om den blanke er over,under,venstre eller høyre for ruten.
+        onClick skal kalle en funksjon som returnerer tallet til riktig id fra hver rute. Da skal funksjonen slå opp hva som er i ruten over, under, høyre, venstre.
+
+        Lag funksjonalitet som sier at spillet er løst (Hamming eller Manhattan sannsynligvis.)
+        
+        */
+
+        let currentEmptySquareId = 1;
+
+        function updateIDs(){
+
+        }
+        
+        function moveSquare(Id, txt){
+
+            Id = Number(Id);
+            //Check left/right, if at the left or right edge
+            if(Id - 1 == currentEmptySquareId){
+                sqText = document.getElementById(`square${Id-1}`).innerHTML
+                document.getElementById(`square${Id}`).className = "empty"
+                document.getElementById(`square${Id-1}`).className = "square"
+                document.getElementById(`square${Id-1}`).innerHTML = txt
+                document.getElementById(`square${Id}`).innerHTML = sqText
+            }
+
+
+            
+            if(Id == 2){
+                console.log("rute høyre = ", document.getElementById(`square${Id+1}`).innerHTML)
+                console.log("rute nede = ", document.getElementById(`square${Id+3}`).innerHTML)
+            }
+        }
+
+        /*
+        0 1 2
+        3 4 5
+        6 7 8
+        */
+
+        updateView()
+        function updateView(){
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <div id="square1" class="empty" onclick="moveSquare(this.id.at(-1), this.textContent)">0</div>
+            <div id="square2" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">1</div>
+            <div id="square3" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">2</div>
+            <div id="square4" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">3</div>
+            <div id="square5" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">4</div>
+            <div id="square6" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">5</div>
+            <div id="square7" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">6</div>
+            <div id="square8" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">7</div>
+            <div id="square9" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">8</div>
+        `}
+    </script>
+</body>
+</html>
