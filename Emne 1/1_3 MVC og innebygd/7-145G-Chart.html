@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Needed a bit more space around the left and top of the bars. */
+        body{
+            margin: 3%;
+        }
+        .selected{
+            border: 4px solid black;
+        }
+    </style>
+</head>
+<body>
+    
+<div id="content">
+</div>
+
+<script>
+    /*
+    Oppgaven tar utgangspunkt i denne koden: getacademy.github.io/BarChart Dette er kode som lager et stolpediagram basert på en liste av tall - hvor hvert tall er mellom 1 og 10. Oppgaven består i å fullføre applikasjonen. Den er skrevet etter Model View Controller-patternet - og koden du legger til skal også være det.
+
+    Gjør det mulig å velge en stolpe. Man skal kunne velge en stolpe ved å klikke på den. Den skal da få en svart ramme rundt seg, og i tillegg skal teksten oppdateres til for eksempel    "Valgt stolpe: 1". Hvis man klikker på den stolpen som allerede er valgt, skal deretter ingen stolpe være valgt. -Done
+
+    Knappene "Endre valgt stolpe" og "Fjerne valgt stolpe" skal være disablet når ingen stolpe er valgt - og enablet ellers. -Done
+
+    Når man trykker på "Fjerne valgt stolpe", skal den valgte stolpen fjernes. Alle stolper som var til høyre for denne, flyttes da ett hakk til venstre. Det vil si at om numbers er 
+    [1, 2, 3, 4, 5] - og så fjerner stolpen i midten, så skal numbers etter det være [1, 2, 4, 5]. -Done
+
+    Når man trykker på "Endre valgt stolpe", skal den valgte stolpen endre verdien som brukeren har skrevet i input-boksen. Det er kun 1,2,3,4,5,6,7,8, 9 og 10 som er gyldige verdier.     Dersom brukeren ikke har skrevet en gyldig verdi i input-boksen, skal det gis en feilmelding. -Done
+
+    Når man trykker på "Legg til stolpe", skal det legges til et nytt tall sist i listen (og en ny stolpe lengst til høyre i stolpediagrammet) med verdien som brukeren har skrevet i   input-boksen. Dersom brukeren ikke har skrevet en gyldig verdi i input-boksen, skal det gis en feilmelding. -Done
+    */
+
+
+
+
+    // model
+    let numbers = [7, 3, 1, 5, 8];
+    let chosenBar = -1; // Variabel for hvilken stolpe som er valgt
+    let inputValue; // Variabel for hva som er skrevet i input-feltet
+    let selectedStyle = "stroke-width:1px;stroke:rgb(0,0,0);stroke-opacity:0.4";
+
+
+    // view
+    updateView();
+    function updateView() {
+        let svgInnerHtml = '';
+        for (let i = 0; i < numbers.length; i++) {
+            svgInnerHtml += createBar(numbers[i], i);
+        }
+
+        document.getElementById('content').innerHTML = /*HTML*/`
+            <svg id="chart" width="500" height="500" viewBox="-1 0 80 50">
+                ${svgInnerHtml}
+            </svg><br/>
+            Valgt stolpe: <i>${chosenBar == -1 ? 'ingen':chosenBar+1}</i>
+            <br />
+            Verdi:
+            <input type="number" min="1" max="10" oninput="inputValue = this.value" />
+            <button onclick="addNewBar()">Legg til stolpe</button>
+            <button ${chosenBar == -1 ? "disabled":""} onclick="modifySelectedBar()">Endre valgt stolpe</button><br />
+            <button ${chosenBar == -1 ? "disabled":""} onclick="removeSelectedBar()">Fjerne valgt stolpe</button>
+        `;
+    }
+
+    function createBar(number, barNo) {
+        const width = 8;
+        const spacing = 2;
+        let x = (barNo) * (width + spacing);
+        let height = number * 7;
+        let y = 60 - height;
+        let color = calcColor(1, 10, barNo + 1);
+        return `<g> <rect id="bar${barNo}" style="${chosenBar == barNo ? selectedStyle:""}" onclick="selectBar(${barNo})" width="${width}" height="${height}"
+                            x="${x}" y="${y}" fill="${color}"></rect>
+                    <text x="${x+4}" y="${y-1}" text-anchor="middle" font-family="Verdana" font-size="3" fill="black" >${number}</text> </g>`;
+    }
+
+    function calcColor(min, max, val) {
+        var minHue = 240, maxHue = 0;
+        var curPercent = (val - min) / (max - min);
+        var colString = "hsl(" + ((curPercent * (maxHue - minHue)) + minHue) + ",100%,50%)";
+        return colString;
+    }
+
+    // controller (ingenting her ennå)
+    //Sets the chosenBar index number(from numbers), and reloads the view. Using -1 as a sort of "no bar is selected".
+    function selectBar(bar){
+        chosenBar == bar ? chosenBar = -1 : chosenBar = bar;
+        updateView()
+    }
+
+    function removeSelectedBar(){
+        numbers.splice(chosenBar, 1);
+        chosenBar = -1;
+        updateView()
+    }
+
+    function modifySelectedBar(){
+        // if inputvalue is anything other than 1-10 (or undefined), it triggers an alert.
+        inputValue >0 && inputValue <= 10 ? numbers[chosenBar] = inputValue : alert("Gyldig input er fra 1 til 10");
+        updateView();          
+
+    }
+
+    function addNewBar(){
+        inputValue >0 && inputValue <= 10 ? numbers.push(inputValue) : alert("Gyldig input er fra 1 til 10");
+        updateView();
+    }
+
+</script>
+
+</body>
+</html>

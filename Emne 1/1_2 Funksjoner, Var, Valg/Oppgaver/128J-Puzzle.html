@@ -23,80 +23,98 @@
             background-color: white;
             font-size: large;
         }
-
-        .empty{
-            display: hidden;
-            color: transparent;
-        }
-        
-        
-
         
     </style>
 </head>
 <body>
+
     <div id="app" class="main">
-        
+        <div id="square1" class="empty" onclick="moveSquare(this, '', 'square2', 'square4', '', this.textContent)"></div>
+        <div id="square2" class="square" onclick="moveSquare(this, '', 'square3', 'square5', 'square1', this.textContent)">1</div>
+        <div id="square3" class="square" onclick="moveSquare(this, '', '', 'square6', 'square2', this.textContent)">2</div>
+
+        <div id="square4" class="square" onclick="moveSquare(this, 'square1', 'square5', 'square7', '', this.textContent)">3</div>
+        <div id="square5" class="square" onclick="moveSquare(this, 'square2', 'square6', 'square8', 'square4', this.textContent)">4</div>
+        <div id="square6" class="square" onclick="moveSquare(this, 'square3', '', 'square9', 'square5', this.textContent)">5</div>
+
+        <div id="square7" class="square" onclick="moveSquare(this, 'square4', 'square8', '', '', this.textContent)">6</div>
+        <div id="square8" class="square" onclick="moveSquare(this, 'square5', 'square9', '', 'square7', this.textContent)">7</div>
+        <div id="square9" class="square" onclick="moveSquare(this, 'square6', '', '', 'square8', this.textContent)">8</div>
 
     </div>
 
 
     <script>
         /*
-        Lag en grid på 3x3 med tallene 0-8 og 1 blank rute.
-        Alle rutene skal ha en "systematisk" is (square1, square2 etc)
-        Ved onClick skal ruten bytte plass med den blanke, om den blanke er over,under,venstre eller høyre for ruten.
-        onClick skal kalle en funksjon som returnerer tallet til riktig id fra hver rute. Da skal funksjonen slå opp hva som er i ruten over, under, høyre, venstre.
+        Lag en grid på 3x3 med tallene 0-8 og 1 blank rute. -Check
+        Alle rutene skal ha en "systematisk" is (square1, square2 etc) -Check
+        Ved onClick skal ruten bytte plass med den blanke, om den blanke er over,under,venstre eller høyre for ruten. -Check
+        onClick skal kalle en funksjon som returnerer tallet til riktig id fra hver rute. Da skal funksjonen slå opp hva som er i ruten over, under, høyre, venstre. -Check
 
-        Lag funksjonalitet som sier at spillet er løst (Hamming eller Manhattan sannsynligvis.)
-        
+        Lag funksjonalitet som sier at spillet er løst. -Check
+
+        Oversikt 'square{x}':
+        1 2 3 
+        4 5 6
+        7 8 9
         */
 
-        let currentEmptySquareId = 1;
+        //This takes the current element, and elements that are adjacent to it, then the textContent of the current element.
+        function moveSquare(current, over,right,under,left, txt){
+              
+            /*
+            If the current element dont have 4 adjacent elements, skip those checks.
+            If it has an appropriate adjacent element, and its text is nothing (only the empty square has no text):
+            change the innerHTML and classname of the appropriate element, and the current one (visually, theyre switching places).
+            */   
 
-        function updateIDs(){
+            if(over != "" && document.getElementById(over).innerHTML == ""){
 
-        }
-        
-        function moveSquare(Id, txt){
+                document.getElementById(over).innerHTML = txt;
+                document.getElementById(over).className = "square";
+                current.innerHTML = "";
+                current.className = "empty";
 
-            Id = Number(Id);
-            //Check left/right, if at the left or right edge
-            if(Id - 1 == currentEmptySquareId){
-                sqText = document.getElementById(`square${Id-1}`).innerHTML
-                document.getElementById(`square${Id}`).className = "empty"
-                document.getElementById(`square${Id-1}`).className = "square"
-                document.getElementById(`square${Id-1}`).innerHTML = txt
-                document.getElementById(`square${Id}`).innerHTML = sqText
-            }
+                }
 
+                
+            if(right != "" && document.getElementById(right).innerHTML == ""){
 
+                document.getElementById(right).innerHTML = txt;
+                document.getElementById(right).className = "square";
+                current.innerHTML = "";
+                current.className = "empty";
+
+                }
             
-            if(Id == 2){
-                console.log("rute høyre = ", document.getElementById(`square${Id+1}`).innerHTML)
-                console.log("rute nede = ", document.getElementById(`square${Id+3}`).innerHTML)
+
+            if(under != "" && document.getElementById(under).innerHTML == ""){
+
+                document.getElementById(under).innerHTML = txt;
+                document.getElementById(under).className = "square";
+                current.innerHTML = "";
+                current.className = "empty";
+
+                }
+
+            if(left != "" && document.getElementById(left).innerHTML == ""){
+
+                document.getElementById(left).innerHTML = txt;
+                document.getElementById(left).className = "square";
+                current.innerHTML = "";
+                current.className = "empty";
+
+                }
+                  
+            //Visual feedback when solved.
+            if(document.getElementById("square9").className == "empty"){
+                document.getElementById("app").style.backgroundColor = "green"
             }
-        }
+            }
 
-        /*
-        0 1 2
-        3 4 5
-        6 7 8
-        */
 
-        updateView()
-        function updateView(){
-            document.getElementById("app").innerHTML = /*HTML*/`
-            <div id="square1" class="empty" onclick="moveSquare(this.id.at(-1), this.textContent)">0</div>
-            <div id="square2" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">1</div>
-            <div id="square3" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">2</div>
-            <div id="square4" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">3</div>
-            <div id="square5" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">4</div>
-            <div id="square6" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">5</div>
-            <div id="square7" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">6</div>
-            <div id="square8" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">7</div>
-            <div id="square9" class="square" onclick="moveSquare(this.id.at(-1), this.textContent)">8</div>
-        `}
+
+
     </script>
 </body>
 </html>

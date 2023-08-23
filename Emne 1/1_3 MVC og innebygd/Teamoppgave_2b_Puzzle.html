@@ -76,7 +76,7 @@
 
 
     function addPiece(pieceConf){
-
+      //Denne kan forenkles
       if (counter >= 5) {
           numberOfRowsPlaced++;
           counter = 0;
@@ -108,6 +108,8 @@
 
     //View ?
     function addPuzzlePiece(
+
+      //Bruk if(leftPos == 0 && hasLeft) return; etc
       toId,
       hasTop,
       hasRight,

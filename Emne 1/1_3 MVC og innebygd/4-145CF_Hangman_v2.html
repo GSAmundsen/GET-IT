@@ -9,15 +9,20 @@
       .main {
         display: flex;
         flex-direction: column;
+        text-align: center;
         align-items: center;
         border: 1px solid black;
       }
       .inputContainer {
         width: 300px;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        flex-direction: column;        
       }
+      .hangmanStatus{
+        justify-content: center;
+        font-size: 220%;
+      }
+
     </style>
   </head>
   <body>
@@ -50,6 +55,8 @@
         "Lillestrøm",
         "Sandnes",
       ];
+
+      let statusFace = ['😵','😒','😏','😅','😘','😁']
 
       let guessedLetters = [];
       let theSecretWord = "";
@@ -84,10 +91,8 @@
         }
 
         //If no matching letter was found, add it to the list of guessed letters.
-        if (
-          guessedWord.indexOf(guess) == -1 &&
-          guessedLetters.indexOf(guess) == -1
-        ) {
+        //Adds the letter even if the player has guessed it before.
+        if (guessedWord.indexOf(guess) == -1) {
           guessedLetters.push(guess);
         }
 
@@ -104,15 +109,13 @@
       //View
       updateView();
       function updateView() {
-        //if(theSecretWord == ""){
-        //    setWord()
-        //}
         theSecretWord || setWord();
-        console.log(theSecretWord);
         document.getElementById("app").innerHTML = /*HTML*/ `
         <div>
             <h3>Du har <u>${guessesRemaining}</u> forsøk igjen</h3>
-            <br>
+            <div class="hangmanStatus">
+              <p>${statusFace[guessesRemaining]}</p>
+              </div>
             <h4>>${guessedLetters}<</h4>
             <br>
             ${guessedWord}
@@ -136,9 +139,8 @@
                 <h4>Du klarte det! Svaret var ${theSecretWord}.</h4>
                 <button onclick="resetGame()">Start på nytt?</button>
             </div>
-                
-            
         </div>
+        
         
         `;
       }
