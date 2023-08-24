@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app"></div>
+
+    
+    <script>
+        /*
+        Oppgave 151 A
+        Lag et tekst-input-felt "tekst" og et tall-input-felt "maks. lengde". 
+        Lag en knapp "gjenta". 
+        Når brukeren trykker på denne knappen, skal teksten dobles (text += text) så lenge teksten har lengde under "maks. lengde". Resultatet legges til nettsiden.
+        */
+
+        let userText = "";
+        let processedText
+        let maxTextLength;
+        
+        show()
+        
+        function show(){
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <label for="inputText">Tekst</label>
+            <br>
+            <input type="text" name="inputText" oninput="userText = this.value">
+            <br>
+            <label for="maximumLength">Maks. Lengde</label>
+            <br>
+            <input type="number" style="width:135px" name="maximumLength" maxlength='3' oninput="maxTextLength = this.value">
+            <button onclick="repeatChars()">Gjenta</button>
+            <h3>${userText == "" ? "Venter på input" : 
+                "Teksten '"+userText+"' repetert til den er "+maxTextLength+" tegn lang :"+"<br>"+processedText}</h3>
+            `
+        }
+
+        function repeatChars(){
+            if(userText ==="") return;
+            processedText = userText;
+
+            for(let i = 0; processedText.length<maxTextLength; i++){
+                processedText +=processedText;
+            }
+
+            show()
+        }
+    </script>
+</body>
+</html>

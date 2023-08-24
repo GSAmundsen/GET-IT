@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app"></div>
+
+
+    <script>
+        const alphabet = "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZæÆøØåÅ"
+        // Default text value.
+        let inputText = "Eksempel :\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        let checkLetters;
+        let result = "";
+
+        show();
+
+        function show(){
+            document.getElementById("app").innerHTML = /*HTML*/ `
+            <div>
+            <textarea rows="10" cols="75" oninput="inputText = this.value">${inputText}</textarea><br><br>
+            <label for="letterInput">Sjekk etter følgende bokstaver, la være tom for å sjekke hele alfabetet</label><br>
+            <input type="text" oninput="checkLetters = this.value">
+            <button style="width:150px; height:30px;" onclick="countLetters()">Kjør!</button>
+            </div>
+            <div>
+            <h3>${result == "" ? "Ingen match": "Teksten inneholder følgende:"}</h3>
+            <p style="line-height: 1.5em;">${result}</p>
+            </div>
+
+            `
+        }
+
+        function countLetters(){
+            if(inputText == ""){
+                alert("Vennligst skriv inn tekst");
+                show()                
+                return;
+            }
+            //If the checkLetters var is null, use the const alphabet instead.
+            checkLetters = checkLetters ?? alphabet;
+            let counter = 0;
+            //Clean up the result, so the new search is not appended.
+            result = "";
+            
+            //For every letter in the checkLetters string (array), check if it matches with each letter in the inputText.
+            //If it has !0 matches, append the current letter and the counter value to the result string. (maybe a dictionary here.....)
+            for(let l = 0; l < checkLetters.length; l++){
+                counter = 0;
+                
+                for(let t = 0; t < inputText.length; t++){
+                    if(inputText[t] == checkLetters[l]){
+
+                        counter++
+                    }
+                }
+                if(counter != 0){
+                    result +=`${checkLetters[l]} : ${counter}stk<br>`}
+            }
+            //Setting this to nutt so it doest stay at the previous value, since this is only updated oninput.
+            checkLetters = null;
+
+           show()
+        }
+
+            
+        
+    </script>
+</body>
+</html>

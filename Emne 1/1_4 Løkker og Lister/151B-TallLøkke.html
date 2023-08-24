@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        /*
+        Oppgave 151 B  
+        Lag tre tall-input-felter for start-verdi, slutt-verdi og endring. 
+        Bruk en for-løkke til å telle ut fra dette - og vis alle tallene fra resultatet i en egen div. 
+        Bruk if-setninger til å sjekke at du ikke ender med en evig løkke.
+        */
+
+        let startValue = 0;
+        let endValue = 0;
+        let changeValue = 0;
+        let loopType = "";
+        let numbers = []
+        show()
+
+        function show(){
+            document.getElementById("app").innerHTML = /*HTML*/ `
+            <div>
+            <label for="inputStart">Start:</label>
+            <input type="number" style="width:35px" name="inputStart" oninput="startValue = this.value"><br>
+            <label for="inputEnd">Slutt:</label>
+            <input type="number" style="width:35px" name="inputEnd" oninput="endValue = this.value"><br>
+            <label for="inputChange">Endring:</label>
+            <input type="number" style="width:35px" name="inputChange" oninput="changeValue = this.value"><br>
+            <button onclick="calc('While')">While-løkke</button>
+            <button onclick="calc('For')">For-løkke</button>
+
+            </div>
+            <div>
+                <h3>${loopType ?? "While "} ${numbers}</h3>
+            </div>
+            `
+            
+        }
+
+        function calc(type){
+            startValue = Number(startValue)
+            endValue = Number(endValue)
+            changeValue = Number(changeValue)
+            numbers = []
+
+            if(startValue == 0 || endValue == 0 || changeValue == 0 ){
+                alert("Ugyldig input");
+                return;
+            }
+
+            if(startValue < endValue && changeValue>0 || startValue > endValue && changeValue <0 ){
+
+                if(type == "" || type == "While"){
+
+                    while(startValue < endValue){
+                        numbers.push(startValue)
+                        startValue += changeValue;
+                    }
+                }else{
+                    for(let i = startValue; i < endValue; i+=changeValue){
+                        numbers.push(i)
+                    }
+                }
+
+                loopType = type;
+            }else{
+                alert("Det vil sannsynligvis føre til en uendelig løkke")
+                return;
+            }
+            
+            show()
+
+        }
+
+
+    </script>
+</body>
+</html>

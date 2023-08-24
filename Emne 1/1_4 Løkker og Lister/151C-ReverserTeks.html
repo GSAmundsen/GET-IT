@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        /*
+        Oppgave 151 C  
+        Lag en funksjon som tar en tekst som parameter og som returnerer teksten snudd i motsatt rekkefølge. 
+        
+        For eksempel skal 'Terje' bli til 'ejreT. Du kan hente ut en bestemt bokstav i en tekst ved hjelp av funksjonen charAt(). 
+        For eksempel vil 'Terje'.charAt(3) gi den fjerde bokstaven, 'j'.
+        */
+        let inputVal = "";
+        let processedVal = "";
+        let loopType = "";
+
+        show()
+
+        function show(){
+            document.getElementById("app").innerHTML = /*HTML*/ `
+            <input type="text" oninput="inputVal = this.value">
+            <button onclick="reverseString('While')">Reverser med While-løkke</button>
+            <button onclick="reverseString('For')">Reverser med For-løkke</button>
+            <br>
+            <h3>${inputVal == "" ? "" : loopType+": "+ inputVal+ " baklengs er " + processedVal}</h3>
+            `
+        }
+
+        function reverseString(type){
+            processedVal = "";
+
+            if(type == "For"){
+                for(let i = inputVal.length; i > 0; i--){
+                    processedVal += inputVal.charAt(i-1) //or inputVal[i-1];
+                }
+            }else{
+                let i = inputVal.length;
+                while(i > 0){
+                    processedVal += inputVal.charAt(i-1) //or inputVal[i-1];
+                    i--;
+                }
+            }
+            loopType = type;
+            show();
+        }
+    </script>
+</body>
+</html>
