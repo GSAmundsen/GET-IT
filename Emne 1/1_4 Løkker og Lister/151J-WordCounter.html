@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script>
+        /*
+        Oppgave 151 J  
+        Skriv et program som leser inn en linje tekst og teller antall ord, finner det lengste ordet, ordet med flest vokaler og ev. annen statistikk du har lyst til å lage.
+        */
+
+        //model
+        let userText = "Dette er ett eksempel på en tekst. En relativt kort tekst sammenlignet med andre tekster, men en tekst lell.";
+        let wordCount = "";
+        let longestWord = "";
+        let shortestWord = "";
+        let wordWithMostVowels = "";
+        let topVowelCount = 0;
+        let wordsWithMostCons = "";
+        let topConstCount = 0;
+
+
+        //view
+        updateView()
+        function updateView(){
+
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <h3>Skriv inn tekst:</h3>
+            <textarea type="text" rows="6" cols="50" oninput="userText = this.value">${userText}</textarea>
+            <div>
+            <button onclick="analyzeText()">Analyser!</button>
+            <button onclick="reset()">Nullstill</button>
+            </div>
+            <h4>${wordCount == "" ? "Ingen ord":"Antall ord: "+wordCount}</h4>
+            <h4>${longestWord == "" ? "":"Lengste ord: '"+longestWord+"', "+longestWord.length+" bokstaver"}</h4>
+            <h4>${shortestWord == "" ? "":"Korteste ord: '"+shortestWord+"', "+shortestWord.length+" bokstaver"}</h4>
+            <h4>${wordWithMostVowels == "" ? "":"Flest vokaler: '"+wordWithMostVowels+"', "+topVowelCount+" vokaler"}</h4>
+            <h4>${wordsWithMostCons == "" ? "":"Flest konsonanter: '"+wordsWithMostCons+"', "+topConstCount+" vokaler"}</h4>
+            `
+        }
+
+
+        //controller
+        function analyzeText(){
+            // replaces , with space, and . with space, then replaces double-spaces with space. Then splits.
+            let words = userText.replaceAll(',',' ').replaceAll('.',' ').replaceAll('  ',' ').split(' ');
+            //Removes empty entries in the array
+            words = words.filter((word) => word.length > 0);
+            wordCount = words.length;
+
+            //Looping over every word in the array.
+            for(let word of words){
+                //Find the longest word
+                if(word.length > longestWord.length){
+                    longestWord = word;
+                }
+                //Find the shortest word.
+                if(word.length < shortestWord.length || shortestWord == ""){
+                    shortestWord = word;
+                    console.log(shortestWord);
+                }
+
+                //Word with most vowels
+                currentVowelCount = countVowels(word) 
+                if(currentVowelCount > topVowelCount){
+                    wordWithMostVowels = word;
+                    topVowelCount = currentVowelCount;
+                }
+                
+                //Word with most consonants, is likely the longest word - all vowels.
+                currentConstCount = word.length - countVowels(word)
+                if(currentConstCount > topConstCount){
+                    wordsWithMostCons = word;
+                    topConstCount = currentConstCount;
+                }
+            }
+            updateView()
+        }
+
+        function countVowels(word){
+            const vowels = ["a","e","i","o","u","æ","ø","å"];
+            let counter = 0;
+            for(let letter of word){
+                if(vowels.includes(letter)){
+                    counter++
+                }
+            }
+            return counter;
+        }
+
+
+        function reset(){
+            window.location.reload()
+        }
+
+    </script>
+</body>
+</html>

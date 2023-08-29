@@ -9,168 +9,202 @@
     <pre id="output"></pre>
 
     <script>
+      drawUpSideDownTriangle();
+      writeLineBreak();
 
-        drawUpSideDownTriangle();
-        drawDiamond();
-        drawXWing();
+      drawDiamond();
+      writeLineBreak();
 
+      drawXWing();
+      writeLineBreak();
 
-        function drawUpSideDownTriangle(){
+      function drawUpSideDownTriangle() {
+        /*
+        Row 0 = 0 blank - 8 hashes (wich is 2x the number of rows.) - newLine
+        Row 1 = 1 blank - 6 hashes - newLine
+        Row 2 = 2 blank - 4 hashes - newLine
+        Row 3 = 3 blank - 2 hashes - newLine
+        */
+        let totalRows = 4;
 
-          writeLineBreak()
-          
-          /* 
-          Row 0 = 0 blank - 8 hashes (wich is 2x the number of rows.) - newLine
-          Row 1 = 1 blank - 6 hashes - newLine
-          Row 2 = 2 blank - 4 hashes - newLine
-          Row 3 = 3 blank - 2 hashes - newLine
-          */
-          let totalRows = 4;
-
-          //The For loop for the rows.
-          for (let currentRow = 0; currentRow < totalRows; currentRow++) {
-              
-              //Start with whitespaces...
-              // New loop: if i is less that the current number of rows, add 1 whitespace() and increment by 1.
-              // If we are on currentRow 0, i will not be less than the currentRow, and this will skip.
-              // If we are on currentRow 1, i will be less than the currentRow for 1 iteration, so it will draw 1 whitespace.
-              // If we are on currentRow 2, i will be less than the currentRow for 2 iterations, so it will draw 1 whitespace.
-              // etc..
-              for (let i = 0; i <currentRow ; i++) {
-              writeSpace()
-              }
-
-              //...Append symbols, reducing the limit to wich we count.
-              // New loop: if the new counter j is less than 2 x (the total number of rows - the number of rows weve been through), add 1 # and increment by 1;
-              // On currentRow 0, we draw # as long as j is less than 2 x (4 - 0) (8) wich will be for 8 iterations, drawing 8 #'s.
-              // On currentRow 1, we draw # as long as j is less than 2 x (4 - 1) (6) wich will be for 6 iterations, drawing 6 #'s.
-              // On currentRow 2, we draw # as long as j is less than 2 x (4 - 2) (4) wich will be for 4 iterations, drawing 4 #'s'
-              // etc..
-              for (let j = 0; j < 2 * (totalRows - currentRow); j++) {
-              writeHash()
-              }
-
-              // After a row i finished, newLine.
-              writeLineBreak();
-          }    
-        }
-
-        function drawDiamond(){
-          //space between this and the previous shape.
-            writeLineBreak()
-
-            /* The diamond pattern is 8 rows. 
-             row 0 - draw blanks on 0,1,2, then hashes on 3,4
-             row 1 - draw blanks on 0,1, then hashes on 2,3,4,5
-             row 2 - draw blanks on 0, then hashes on 1,2,3,4,5,6
-             row 3 - draw no blanks then hash'es on 0,1,2,3.4.5.6.7
-             row 4 - draw no blanks then hash'es on 0,1,2,3,4,5,6,7
-             row 5 - draw blanks on 0, then hashes on 1,2,3,4,5,6
-             row 6 - draw blanks on 0,1,then hashes on  2,3,4,5
-             row 7 - draw blanks on 0,1,2, then hashes on 3,4       
-            */ 
-
-            let totalRows = 8;
-
-            for(let currentRow = 0; currentRow < totalRows; currentRow++){
-              
-              //Draw the top half on the first half of totalRows.
-              if(currentRow < totalRows/2){
-                for(let i = 0;i < Math.abs(totalRows / 2-currentRow-1); i++){
-                  writeSpace()
-                  /*
-                  0: 0 < (8 / 2 - Row0 - 1) (3) = _ _ _
-                  1: 0 < (8 / 2 - Row1 - 1) (2) = _ _
-                  2: 0 < (8 / 2 - Row2 - 1) (1) = _ 
-                  */
-              }
-
-                for(let j = 0; j< 2 * currentRow + 2;j++){
-                  writeHash();
-                  /*
-                  Adds to the existing row
-                  0: 0 < Row0 * 2 + 2 (2) = _ _ _ # #
-                  1: 0 < Row1 * 2 + 2 (4) = _ _ # # # #
-                  2: 0 < Row2 * 2 + 2 (6) = _ # # # # # #
-                  3: 0 < Row3 * 2 + 2 (8) = # # # # # # # #
-                  
-                  */
-                  }
-              }else{
-                
-                // Here, we modulo the curretRow with half the total number of rows. (When totalRows is 8, this will produce 0,1,2,3 from  )
-                for(let i = 0;i < currentRow%(totalRows/2); i++){
-                  writeSpace()
-                    /*
-                    4: 0 < (4 % 4) (0) =  
-                    5: 0 < (5 % 4) (1) = _
-                    6: 0 < (6 % 4) (2) = _ _
-                    7: 0 < (7 % 4) (3) = _ _ _ 
-                    */
-
-                }
-                for(let j = 0; j< 2 * (totalRows - currentRow);j++){
-                  writeHash();
-                  
-                  /*
-                  Draws the lower half:
-                  3: 0 < Row3 * 2 + 2 (8) = # # # # # # # #
-                  2: 0 < Row2 * 2 + 2 (6) = _ # # # # # #
-                  1: 0 < Row1 * 2 + 2 (4) = _ _ # # # #
-                  0: 0 < Row0 * 2 + 2 (2) = _ _ _ # #
-                  */
-                }
-              }
-
-              writeLineBreak();
-            }
-        } 
-
-        function drawXWing(){
-          /*
-          8 rows, and rows are 14 characters long
-          
-             0 1 2 3 4 5 6 7 8 9 A B C D  
-          0: # _ _ _ _ _ _ _ _ _ _ _ _ #  (14)
-          1: _ # # _ _ _ _ _ _ _ _ # #  (13)
-          2: _ _ # # # _ _ _ _ # # #  (12)
-          3: _ _ _ # # # # # # # #  (11)
-          4: _ _ _ # # # # # # # #  (11)
-          5: _ _ # # # _ _ _ _ # # #  (12)
-          6: _ # # _ _ _ _ _ _ _ _ # #  (13)
-          7: # _ _ _ _ _ _ _ _ _ _ _ _ #  (14)
-
-          */
-          let totalRows = 8;
-
-          //Main loop for rows.
-          for(let currentRow = 0; currentRow < totalRows; currentRow++)
-          {
-            //Draw blanks
-            for(let i = 0; i<totalRows;i++){
-              if(i == currentRow || i == totalRows - 1 - currentRow){
-                writeHash();
-              }else{
-                writeSpace();
-              }
-            }
-
-            writeLineBreak();
+        //The For loop for the rows.
+        for (let currentRow = 0; currentRow < totalRows; currentRow++) {
+          //Start with whitespaces...
+          // New loop: if i is less that the current number of rows, add 1 whitespace() and increment by 1.
+          // If we are on currentRow 0, i will not be less than the currentRow, and this will skip.
+          // If we are on currentRow 1, i will be less than the currentRow for 1 iteration, so it will draw 1 whitespace.
+          // If we are on currentRow 2, i will be less than the currentRow for 2 iterations, so it will draw 1 whitespace.
+          // etc..
+          for (let i = 0; i < currentRow; i++) {
+            writeSpace();
           }
+          //...Append symbols, reducing the limit to wich we count.
+          // New loop: if the new counter j is less than 2 x (the total number of rows - the number of rows weve been through), add 1 # and increment by 1;
+          // On currentRow 0, we draw # as long as j is less than 2 x (4 - 0) (8) wich will be for 8 iterations, drawing 8 #'s.
+          // On currentRow 1, we draw # as long as j is less than 2 x (4 - 1) (6) wich will be for 6 iterations, drawing 6 #'s.
+          // On currentRow 2, we draw # as long as j is less than 2 x (4 - 2) (4) wich will be for 4 iterations, drawing 4 #'s'
+          // etc..
+          for (let j = 0; j < 2 * (totalRows - currentRow); j++) {
+            writeHash();
+          }
+          // After a row i finished, newLine.
+          writeLineBreak();
         }
+      }
 
+      function drawDiamond() {
+        /* The diamond pattern is 8 rows.
+           row 0 - draw blanks on 0,1,2, then hashes on 3,4
+           row 1 - draw blanks on 0,1, then hashes on 2,3,4,5
+           row 2 - draw blanks on 0, then hashes on 1,2,3,4,5,6
+           row 3 - draw no blanks then hash'es on 0,1,2,3.4.5.6.7
+           row 4 - draw no blanks then hash'es on 0,1,2,3,4,5,6,7
+           row 5 - draw blanks on 0, then hashes on 1,2,3,4,5,6
+           row 6 - draw blanks on 0,1,then hashes on  2,3,4,5
+           row 7 - draw blanks on 0,1,2, then hashes on 3,4
+          */
+        let totalRows = 8;
 
-        function writeHash() {
-          document.getElementById("output").innerText += "#";
+        for (let currentRow = 0; currentRow < totalRows; currentRow++) {
+          //Draw the top half on the first half of totalRows.
+          if (currentRow < totalRows / 2) {
+            for (let i = 0; i < totalRows / 2 - currentRow - 1; i++) {
+              writeSpace();
+              /*
+                0: 0 < (8 / 2 - Row0 - 1) (3) = _ _ _
+                1: 0 < (8 / 2 - Row1 - 1) (2) = _ _
+                2: 0 < (8 / 2 - Row2 - 1) (1) = _
+                */
+            }
+            for (let j = 0; j < 2 * currentRow + 2; j++) {
+              writeHash();
+              /*
+                Adds to the existing row
+                0: 0 < Row0 * 2 + 2 (2) = _ _ _ # #
+                1: 0 < Row1 * 2 + 2 (4) = _ _ # # # #
+                2: 0 < Row2 * 2 + 2 (6) = _ # # # # # #
+                3: 0 < Row3 * 2 + 2 (8) = # # # # # # # #
+                */
+            }
+          } else {
+            // Here, we modulo the currentRow with half the total number of rows. (When totalRows is 8, this will produce 0,1,2,3)
+            for (let i = 0; i < currentRow % (totalRows / 2); i++) {
+              writeSpace();
+              /*
+                  4: 0 < (4 % 4) (0) =
+                  5: 0 < (5 % 4) (1) = _
+                  6: 0 < (6 % 4) (2) = _ _
+                  7: 0 < (7 % 4) (3) = _ _ _
+                  */
+            }
+            for (let j = 0; j < 2 * (totalRows - currentRow); j++) {
+              writeHash();
+              /*
+                Draws the lower half:
+                3: 0 < Row3 * 2 + 2 (8) = # # # # # # # #
+                2: 0 < Row2 * 2 + 2 (6) = _ # # # # # #
+                1: 0 < Row1 * 2 + 2 (4) = _ _ # # # #
+                0: 0 < Row0 * 2 + 2 (2) = _ _ _ # #
+                */
+            }
+          }
+          writeLineBreak();
         }
+      }
 
-        function writeSpace() {
-          document.getElementById("output").innerText += " ";
-        }
+      function drawXWing() {
+        /*
+        8 rows, and rows are 14 characters long
 
-        function writeLineBreak() {
-          document.getElementById("output").innerText += "\n";
+           0 1 2 3 4 5 6 7 8 9 A B C D
+        0: # _ _ _ _ _ _ _ _ _ _ _ _ #  (14)
+        1: _ # # _ _ _ _ _ _ _ _ # #  (13)
+        2: _ _ # # # _ _ _ _ # # #  (12)
+        3: _ _ _ # # # # # # # #  (11)
+        4: _ _ _ # # # # # # # #  (11)
+        5: _ _ # # # _ _ _ _ # # #  (12)
+        6: _ # # _ _ _ _ _ _ _ _ # #  (13)
+        7: # _ _ _ _ _ _ _ _ _ _ _ _ #  (14)
+        
+        */
+
+        let totalRows = 8;
+
+        // for (let currentRow = 0; currentRow < 4; currentRow++) {
+        //   oneRow(currentRow);
+        // }
+        // for (let currentRow = 3; currentRow >= 0; currentRow--) {
+        //   oneRow(currentRow);
+        // }
+        for (let rowIndex of [0, 1, 2, 3, 3, 2, 1, 0]) {
+          oneRow(rowIndex);
         }
+      }
+
+      drawXWing2()
+      function drawXWing2() {
+        // 8 rows
+        for (let x = 0; x < 8; x++) {
+          // this creates a 'curve': 3,2,1,0,0,1,2,3 sinces abs negate negativity ^^
+          //This also becomes the columns of spaces
+          const spaceCount1 = 3 - Math.floor(Math.abs(3.5 - x));
+          //Hashes are follow the same pattern, but where there is 1 space, theres 2 # and so on
+          const hashCount = spaceCount1 + 1;
+          /* This creates the following : 
+            
+          */
+          const spaceCount2 = 7 - hashCount - spaceCount1;
+          
+          //Left half
+          repeat(spaceCount1, writeSpace);
+          repeat(hashCount, writeHash);
+          repeat(spaceCount2, writeSpace);
+          //Right half
+          repeat(spaceCount2, writeSpace);
+          repeat(hashCount, writeHash);
+          repeat(spaceCount1, writeSpace);
+          writeLineBreak();
+        }
+      }
+
+      function oneRow(currentRow) {
+        const spaceCount1 = currentRow;
+        const hashCount = currentRow + 1;
+        const spaceCount2 = 7 - hashCount - spaceCount1;
+        repeat(currentRow, writeSpace);
+        repeat(currentRow + 1, writeHash);
+        repeat(spaceCount2, writeSpace);
+        repeat(spaceCount2, writeSpace);
+        repeat(currentRow + 1, writeHash);
+        repeat(currentRow, writeSpace);
+        writeLineBreak();
+      }
+
+      function repeat(times, fn) {
+        for (let i = 0; i < times; i++) {
+          fn();
+        }
+      }
+
+      function repeat2(times, fn) {
+        return function () {
+          for (let i = 0; i < times; i++) {
+            fn();
+          }
+        };
+      }
+
+      function writeHash() {
+        document.getElementById("output").innerText += "#";
+      }
+
+      function writeSpace() {
+        document.getElementById("output").innerText += " ";
+      }
+
+      function writeLineBreak() {
+        document.getElementById("output").innerText += "\n";
+      }
     </script>
   </body>
 </html>
