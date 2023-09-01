@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .game-container {
+            
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .tower-container {
+            position: relative;
+        }
+
+        .tower {
+            width: 100px;
+            height: 120px;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            border-bottom: 8px solid darkred;
+        }
+
+        .tower-container::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 120px;
+            z-index: -10;
+            background-color: darkred;
+        }
+
+        .disk {
+            width: 20px;
+            height: 20px;
+            background-color: blue;
+            border: 4px solid gray;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+    </div>
+
+    <script>
+        /*
+        Kan kun bruke funksjoner, variabler, operatorer, if-setninger og MVC.
+            
+        1. flytte hver disk uten å sjekke om det er lov eller ikke. Sjekk at det virker før dere går videre. 
+        2. Implementer så reglene. Du kan ikke flytte en disk til et tårn om det alt ligger en disk der som er mindre.    
+        3. Skjul alltid knappene som flytter en disk dit den allerede er. Skjul også knappene som er ulovlige å utføre. 
+        4. All diskene skal over til høyre tårn, da er spillet løst. Vis melding
+        5. Restart knapp om spillet er løst
+
+
+        Utfordringer:
+        Steg 1: Basic Funksjonalitet
+        Hvordan flytter vi på diskene?
+        
+        Steg 2: Regler 1
+        Hvordan vet vi hvordan den store er på bunnen? 
+        Hvordan vet vi hvilken som kan flyttes på, og hvor vil vi flytte den?
+
+        Steg 3: Regler 2
+        Skjule knapper som vil gi ugyldige trekk?
+
+        Steg 4: Win/Restart
+        Sjekk om spillet er over, reset knapp.
+
+        */
+
+        //Model
+        let smallDiskTowerIndex = 0;
+        let mediumDiskTowerIndex = 0;
+        let largeDiskTowerIndex = 0;
+
+        let smallDisk = '<div class="disk" style="width: 30px"></div>';
+        let mediumDisk = '<div class="disk" style="width: 50px"></div>';
+        let largeDisk = '<div class="disk" style="width: 70px"></div>';
+
+        // view 
+        updateView();
+        function updateView() {
+            
+            document.getElementById('app').innerHTML = /*HTML*/`
+                <div class="game-container">
+                    <div class="tower-container">
+                        <div id="0" class="tower">
+                            ${largeDiskTowerIndex == 0 ? largeDisk : ''}
+                            ${mediumDiskTowerIndex == 0 ? mediumDisk : ''}
+                            ${smallDiskTowerIndex == 0 ? smallDisk : ''}
+                        </div>
+                    </div>
+                    <div class="tower-container">
+                        <div id="1" class="tower">
+                            ${largeDiskTowerIndex == 1 ? largeDisk : ''}
+                            ${mediumDiskTowerIndex == 1 ? mediumDisk : ''}
+                            ${smallDiskTowerIndex == 1 ? smallDisk : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="tower-container">
+                        <div id="2" class="tower">
+                            ${largeDiskTowerIndex == 2 ? largeDisk : ''}
+                            ${mediumDiskTowerIndex == 2 ? mediumDisk : ''}
+                            ${smallDiskTowerIndex == 2 ? smallDisk : ''}
+                        </div>
+                    </div>
+                </div>
+
+                Flytt liten disk til 
+                <button ${checkMoves('small', 0)} onclick="moveSmallDisk(0)">venstre tårn</button>
+                <button ${checkMoves('small', 1)} onclick="moveSmallDisk(1)">midtre tårn</button>
+                <button ${checkMoves('small', 2)} onclick="moveSmallDisk(2)">høyre tårn</button>
+                <br/>
+                Flytt medium disk til
+                <button ${checkMoves('medium', 0)} onclick="moveMediumDisk(0)">venstre tårn</button>
+                <button ${checkMoves('medium', 1)} onclick="moveMediumDisk(1)">midtre tårn</button>
+                <button ${checkMoves('medium', 2)} onclick="moveMediumDisk(2)">høyre tårn</button>
+                <br/>
+                Flytt stor disk til
+                <button ${checkMoves('large', 0)} onclick="moveLargeDisk(0)">venstre tårn</button>
+                <button ${checkMoves('large', 1)} onclick="moveLargeDisk(1)">midtre tårn</button>
+                <button ${checkMoves('large', 2)} onclick="moveLargeDisk(2)">høyre tårn</button>
+                <br/>
+                <div style="display: ${checkState() ? "flex":"none"}"> Du vant! 
+                    <button onclick="reseGame()">Prøv igjen?</button>
+                </div>
+            `;
+        }
+
+        /*
+        Regler:
+        Medium and Large disk, can not MOVE TO the same index as the small disk.
+        Large disk, can not MOVE TO the same index as the medium or small disk.
+
+        Medium disk can not move if it has the same index as the small disk. ||
+        Large disk can not move it it has the same index as the medium or small disk. ||
+        */
+
+        function checkMoves(diskType, moveToIndex){
+            
+            if(diskType == "small"){
+                if(moveToIndex == smallDiskTowerIndex){
+                    return 'disabled';
+                }
+            }else if(diskType == "medium"){
+                    if(mediumDiskTowerIndex == smallDiskTowerIndex ||
+                        moveToIndex == smallDiskTowerIndex ||
+                        moveToIndex == mediumDiskTowerIndex){
+                        return 'disabled';}
+            }else if(diskType == "large"){
+                    if(largeDiskTowerIndex == mediumDiskTowerIndex ||
+                        largeDiskTowerIndex == smallDiskTowerIndex ||
+                        moveToIndex == mediumDiskTowerIndex ||
+                        moveToIndex == smallDiskTowerIndex||
+                        moveToIndex == largeDiskTowerIndex){
+                        return 'disabled';}
+                }
+
+                return '';
+            }
+        
+        // controller
+        function moveSmallDisk(toTowerIndex) {
+            smallDiskTowerIndex = toTowerIndex;
+
+            updateView(); 
+        }
+
+        function moveMediumDisk(toTowerIndex) {
+            mediumDiskTowerIndex = toTowerIndex;
+
+            updateView();
+        }
+
+        function moveLargeDisk(toTowerIndex) {
+            largeDiskTowerIndex = toTowerIndex;
+
+            updateView();
+        }
+
+        function checkState(){
+            if(smallDiskTowerIndex == 2 && 
+                mediumDiskTowerIndex == 2 && 
+                    largeDiskTowerIndex == 2){
+                return true;}
+        }
+
+        function resetGame(){
+            smallDiskTowerIndex = 0;
+            mediumDiskTowerIndex = 0;
+            largeDiskTowerIndex = 0;
+            updateView();
+        }
+
+        
+    </script>
+</body>
+
+</html>

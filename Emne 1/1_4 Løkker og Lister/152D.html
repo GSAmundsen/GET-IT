@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <script>
+        let result = rollDice();
+        checkRoll()
+        console.log(result);
+        /*
+        En fin utfording er å kjenne igjen yatzy-kombinasjoner ut fra en array på 5 terningverdier
+
+        ett par 
+        to par
+        tre like
+        fire like
+
+        hus (et par, 3 like)
+        liten straight (1-5)
+        stor straigth (2-6)
+
+        sjanse - catch-all
+
+        yatzy (alle like)
+
+        første triks er å lage frekvenstabell og så analysere den
+        */
+
+        /*
+        1. 5 terninger, verdier - Donion Rings.
+        2. Gå igjennom alle verdiene finne like, hus, etc. 
+        3. Frekvenstabell for å sjekke resultat.
+        */
+        function rollDice(){
+            let rolls = [];
+            for(let i=0; i < 6; i++){
+                rolls.push(Math.floor(Math.random()*6+1))
+            }
+            return rolls;
+        }
+
+        function checkRoll(){
+            let frequencyTable = new Array(result.length).fill(0);
+            for(let die of result){
+                frequencyTable[die-1]++;
+            }
+            console.log(frequencyTable);
+            return checkResult(frequencyTable);
+        }
+
+        function checkResult(array){
+            if(array.includes(5)){
+                console.log("Yatzy!")
+                return;
+            }else if(checkStraight(array)){
+                console.log(result.includes(6) ? 'Stor straigth':'Liten straigth');
+                return;
+            }
+            //Hus
+            if(array.includes(2) && array.includes(3)){
+                console.log("Hus")
+                return;
+                // 4 like
+            }else if(array.includes(4)){
+                console.log("4 like")
+                return;
+            }else if(checkPairs(array) == "2 par"){
+                console.log("2 par")
+                return;
+            }else if(array.includes(3)){
+                console.log("3 like");
+                return;
+
+            }else if(checkPairs(array) == "1 par"){
+                console.log("1 par");
+                return;
+            }
+            console.log('Sjanse');
+        }
+
+        function checkPairs(arr){
+            let count = 0;
+            for(let i of arr){
+                if(i == 2){
+                    count++;
+                }
+            }
+            if(count == 2){
+                return "2 par"
+            }else if(count == 1){
+                return "1 par";
+            }
+        }
+
+        function checkStraight(arr){
+            let count = 0;
+            for(let i of arr){
+                if(i == 1){
+                    count++
+                }
+            }
+            if(count == 5){
+                return true;
+            }
+        }
+    </script>
+    
+</body>
+</html>

@@ -17,14 +17,15 @@
 
         //model
         let userText = "Dette er ett eksempel på en tekst. En relativt kort tekst sammenlignet med andre tekster, men en tekst lell.";
-        let wordCount = "";
-        let longestWord = "";
-        let shortestWord = "";
-        let wordWithMostVowels = "";
-        let topVowelCount = 0;
-        let wordsWithMostCons = "";
-        let topConstCount = 0;
-
+        let stats = {
+            wordCount: "",
+            longestWord: "",
+            shortestWord: "",
+            wordWithMostVowels: "",
+            topVowelCount: 0,
+            wordsWithMostCons: "",
+            topConstCount: 0
+        }
 
         //view
         updateView()
@@ -37,11 +38,11 @@
             <button onclick="analyzeText()">Analyser!</button>
             <button onclick="reset()">Nullstill</button>
             </div>
-            <h4>${wordCount == "" ? "Ingen ord":"Antall ord: "+wordCount}</h4>
-            <h4>${longestWord == "" ? "":"Lengste ord: '"+longestWord+"', "+longestWord.length+" bokstaver"}</h4>
-            <h4>${shortestWord == "" ? "":"Korteste ord: '"+shortestWord+"', "+shortestWord.length+" bokstaver"}</h4>
-            <h4>${wordWithMostVowels == "" ? "":"Flest vokaler: '"+wordWithMostVowels+"', "+topVowelCount+" vokaler"}</h4>
-            <h4>${wordsWithMostCons == "" ? "":"Flest konsonanter: '"+wordsWithMostCons+"', "+topConstCount+" vokaler"}</h4>
+            <h4>${stats.wordCount == "" ? "Ingen ord":"Antall ord: "+stats.wordCount}</h4>
+            <h4>${stats.longestWord == "" ? "":"Lengste ord: '"+stats.longestWord+"', "+stats.longestWord.length+" bokstaver"}</h4>
+            <h4>${stats.shortestWord == "" ? "":"Korteste ord: '"+stats.shortestWord+"', "+stats.shortestWord.length+" bokstaver"}</h4>
+            <h4>${stats.wordWithMostVowels == "" ? "":"Flest vokaler: '"+stats.wordWithMostVowels+"', "+stats.topVowelCount+" vokaler"}</h4>
+            <h4>${stats.wordsWithMostCons == "" ? "":"Flest konsonanter: '"+stats.wordsWithMostCons+"', "+stats.topConstCount+" vokaler"}</h4>
             `
         }
 
@@ -52,34 +53,34 @@
             let words = userText.replaceAll(',',' ').replaceAll('.',' ').replaceAll('  ',' ').split(' ');
             //Removes empty entries in the array
             words = words.filter((word) => word.length > 0);
-            wordCount = words.length;
+            stats.wordCount = words.length;
 
             //Looping over every word in the array.
             for(let word of words){
                 //Find the longest word
-                if(word.length > longestWord.length){
-                    longestWord = word;
+                if(word.length > stats.longestWord.length){
+                    stats.longestWord = word;
                 }
                 //Find the shortest word.
-                if(word.length < shortestWord.length || shortestWord == ""){
-                    shortestWord = word;
-                    console.log(shortestWord);
+                if(word.length < stats.shortestWord.length || stats.shortestWord == ""){
+                    stats.shortestWord = word;
                 }
 
                 //Word with most vowels
                 currentVowelCount = countVowels(word) 
-                if(currentVowelCount > topVowelCount){
-                    wordWithMostVowels = word;
-                    topVowelCount = currentVowelCount;
+                if(currentVowelCount > stats.topVowelCount){
+                    stats.wordWithMostVowels = word;
+                    stats.topVowelCount = currentVowelCount;
                 }
                 
                 //Word with most consonants, is likely the longest word - all vowels.
                 currentConstCount = word.length - countVowels(word)
-                if(currentConstCount > topConstCount){
-                    wordsWithMostCons = word;
-                    topConstCount = currentConstCount;
+                if(currentConstCount > stats.topConstCount){
+                    stats.wordsWithMostCons = word;
+                    stats.topConstCount = currentConstCount;
                 }
             }
+            console.log(stats)
             updateView()
         }
 
@@ -96,7 +97,7 @@
 
 
         function reset(){
-            window.location.reload()
+            stats.longestWord = ""
         }
 
     </script>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #app{
+            width: 70vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        
+        #board{
+            display: grid;
+            grid-template-columns: repeat(auto,auto);
+            grid-template-rows: repeat(auto, auto);
+        }
+
+
+        .boardSelector{
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .square{
+            display: grid;
+            border: 1px solid black;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <div id="board"></div>
+
+    <script>
+        /*
+        Oppgave 152 C  
+        Lag et tall-puslespill som viser tallene 1-8 i er rutenett på 3x3, dvs. 9 ruter. Den siste ruten er blank. 
+        Hvis man trykker på et tall som ligger over, under, til høyre eller til venstre for den blanke, skal dette tallet og den blanke bytte plass. 
+        Bruk en liste av tall i modellen, for eksempel let numbers = [1, 2, 5, 7, null, 9, 3, 4, 8, 6];
+        */
+
+        let gridSize = 3;
+        let totalSize = gridSize*gridSize;
+        let numbers = getListOfNumbers();
+        let squareSize = window.innerHeight*0.7/gridSize;
+        let htmlElement = document.getElementById("app");
+
+        /*
+        1. Create all the divs
+        2. Tie the numbers in  the list to the divs.
+        3. check if the clicked div is adjacent to the blank.
+            0 1 2
+            3 4 5
+            6 7 8
+        */
+
+        updateView()
+        function updateView(){
+            document.getElementById("board").innerHTML = "";
+            
+            document.getElementById("board").style = `
+                display:grid;
+                width: 80vw;
+                height: 80vh; 
+                grid-template-columns: repeat(${gridSize}, ${squareSize}px);
+                grid-template-rows: repeat(${gridSize}, ${squareSize}px);
+                `
+
+            for(let i = 0; i < totalSize; i++){
+                document.getElementById("board").innerHTML += 
+                `<div class="square" onclick="moveSquare(this.innerText)">${numbers[i]}</div>`
+            }
+
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <div class="boardSelector"> Board Size: 
+            <div><button ${gridSize == 3 ? 'disabled': ''} onclick="changeSize(3)">3 x 3</button></div>
+            <div><button ${gridSize == 6 ? 'disabled': ''} onclick="changeSize(6)">6 x 6</button></div>
+            <div><button ${gridSize == 9 ? 'disabled': ''} onclick="changeSize(9)">9 x 9</button></div>
+            <div><button ${gridSize == 12 ? 'disabled': ''} onclick="changeSize(12)">12 x 12</button></div>    
+            </div>
+            `
+            
+
+        }
+
+        function changeSize(size){
+            //Recalcs the values, creates a new list, and updates the view.
+            gridSize = size;
+            totalSize = gridSize*gridSize;
+            squareSize = window.innerHeight*0.7/gridSize;
+            numbers = getListOfNumbers();
+            
+            updateView();
+        }
+
+        function moveSquare(val){
+            //Store the indexes, since we are altering them.
+            let indexToReplace = numbers.indexOf(val);
+            let indexOfBlank = numbers.indexOf('_');
+            console.log(indexToReplace, indexOfBlank)
+
+            // If the div we clicked, is above, under, left, or right of the blank.
+            if(indexToReplace == indexOfBlank-gridSize ||
+                indexToReplace == indexOfBlank+gridSize ||
+                //Restricts movement from far left to far right, vice versa. (ex. index 3 to index 2)
+                indexToReplace == indexOfBlank-1 && indexOfBlank % gridSize != 0 ||
+                indexToReplace == indexOfBlank+1 && indexOfBlank % gridSize != gridSize-1)
+                {
+                    numbers.splice(indexToReplace, 1, '_');
+                    numbers.splice(indexOfBlank, 1, val);
+                }
+
+            updateView()
+        }
+
+        function getListOfNumbers(){
+            let nums = [];
+            //Picks a random index
+            let randomEmptyIndex = Math.floor(Math.random()*totalSize);
+            for(let i = 0; i < totalSize;i++){
+                if(i == randomEmptyIndex){
+                    nums.push('_')
+                }
+                nums.push(String(i));
+            }
+            return nums;
+        }
+
+    </script>
+</body>
+</html>

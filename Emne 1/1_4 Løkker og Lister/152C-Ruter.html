@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #app{
+            display: grid;
+            grid-template-columns: repeat(3, 200px);
+            grid-template-rows: repeat(3, 200px);
+        }
+        .square{
+            display: grid;
+            border: 1px solid black;
+            justify-content: center;
+            align-items: center;
+
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        /*
+        Oppgave 152 C  
+        Lag et tall-puslespill som viser tallene 1-8 i er rutenett på 3x3, dvs. 9 ruter. Den siste ruten er blank. 
+        Hvis man trykker på et tall som ligger over, under, til høyre eller til venstre for den blanke, skal dette tallet og den blanke bytte plass. 
+        Bruk en liste av tall i modellen, for eksempel let numbers = [1, 2, 5, 7, null, 9, 3, 4, 8, 6];
+        */
+
+        let numbers = ['1','2','5','7','_','9','3','4','8'];
+        let gridSize = 9;
+        
+
+        /*
+        1. Create all the divs
+        2. Tie the numbers in  the list to the divs.
+        3. check if the clicked div is adjacent to the blank.
+            0 1 2
+            3 4 5
+            6 7 8
+        */
+
+        updateView()
+        function updateView(){
+
+            document.getElementById("app").innerHTML = /*HTML*/`
+            
+            <div class="square" onclick="moveSquare(this.innerText)">${numbers[0]}</div>
+            <div class="square" onclick="moveSquare(this.innerText)">${numbers[1]}</div>
+            <div class="square" onclick="moveSquare(this.innerText)">${numbers[2]}</div>
+            <div class="square" onclick="moveSquare(this.innerText)">${numbers[3]}</div>
+            <div class="square" onclick="moveSquare(this.innerText)">${numbers[4]}</div>
+            <div class="square" onclick="moveSquare(this.innerText)">${numbers[5]}</div>
+            <div class="square" onclick="moveSquare(this.innerText)">${numbers[6]}</div>
+            <div class="square" onclick="moveSquare(this.innerText)">${numbers[7]}</div>
+            <div class="square" onclick="moveSquare(this.innerText)">${numbers[8]}</div>
+
+            `
+        }
+
+        function moveSquare(val){
+            //Store the indexes, since we are altering them.
+            let indexToReplace = numbers.indexOf(val);
+            let indexOfBlank = numbers.indexOf('_');
+
+            // If the div we clicked, is above, under, left, or right of the blank.
+            if(indexToReplace == indexOfBlank-3 ||
+                indexToReplace == indexOfBlank+3 ||
+                //Restricts movement from far left to far right, vice versa. (ex. index 3 to index 2)
+                indexToReplace == indexOfBlank-1 && indexOfBlank % 3 != 0 ||
+                indexToReplace == indexOfBlank+1 && indexOfBlank % 3 != 2){
+            numbers.splice(indexToReplace, 1, '_');
+            numbers.splice(indexOfBlank, 1, val);
+            }
+
+            updateView()
+        }
+
+    </script>
+</body>
+</html>
