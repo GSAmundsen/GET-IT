@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        Oppgave 152 E  
+        Skriv en funksjon som tar en liste av tall som parameter og som returnerer true eller false basert på om 
+        listen er sortert eller ikke. Du skal bare gå gjennom listen en gang med kun én løkke.
+        */
+
+        unsortedList = [1,5,8,9,6,3,1,4,7,8,5,2,1,1,1,4,8,158];
+        sortedList = [1,2,3,4,5,6,7];
+        reverseSortedList = [6,5,2,1,0];
+
+        //Clones the array, and reverses it (b-a instead of a-b);
+        let newArr = [...sortedList]
+        newArr.sort(function (a,b){return b-a})
+        console.log(newArr)
+        console.log(sortedList)
+        
+            
+        
+
+        //Method 1.A
+        function isSortedAscending(arr){
+            // If at any point the current number, is higher than the next number in the list. Its not sorted ascendingly.
+            for(let i = 0; i<arr.length;i++){
+                if(arr[i] > arr[i+1]){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        //Method 1.B
+        function isSortedDescending(arr){
+            // If at any point, the current number is lower than the next number in the list, its not sorted descendingly.
+            for(let i = 0; i<arr.length;i++){
+                if(arr[i] < arr[i+1]){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+    </script>
+</body>
+</html>

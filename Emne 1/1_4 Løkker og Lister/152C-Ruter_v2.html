@@ -73,10 +73,10 @@
                 grid-template-rows: repeat(${gridSize}, ${squareSize}px);
                 `
 
-            for(let i = 0; i < totalSize; i++){
-                document.getElementById("board").innerHTML += 
-                `<div class="square" onclick="moveSquare(this.innerText)">${numbers[i]}</div>`
-            }
+            
+            
+                document.getElementById("board").innerHTML += generateGrid()
+            
 
             document.getElementById("app").innerHTML = /*HTML*/`
             <div class="boardSelector"> Board Size: 
@@ -132,6 +132,16 @@
             }
             return nums;
         }
+
+        function generateGrid(){
+            let htmlCode = "";
+            for(let i = 0; i < totalSize; i++){
+                htmlCode += 
+                `<div class="square" onclick="moveSquare(this.innerText)">${numbers[i]}</div>`
+            }
+            return htmlCode;
+        }
+        
 
     </script>
 </body>

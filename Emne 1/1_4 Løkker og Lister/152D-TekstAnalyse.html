@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        li{
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    
+    <script>
+        /*
+        Oppgave 152 D  
+        Lag en nettside hvor brukeren kan lime inn en lengre tekst (for eksempel ved å kopiere fra en nettavis) 
+        inn i en <textarea> og trykke på en knapp for å få telt opp hvor mange det er av hvert ord. Fremgangsmåten er som følger:
+        
+        1. Rens teksten for alt annet enn tegnene A-Z, Æ, Ø og Å i store og små bokstaver. Bruk en løkke til å gå 
+        gjennom alle bokstavene - og kopier bare bokstaver over i en ny tekst. -Done
+        
+        2. Bruk text.split(' ') til å dele opp en tekst i en liste av ord. -Done
+        
+        3. Til opptellingen trenger du to lister: words og wordCounts. Gå gjennom alle ordene. 
+        Sjekk først om ordet finnes i words. Hvis det gjør det, er opptellingen i samme indes i wordCounts - øk den med én. 
+        Hvis ordet ikke finnes i words, legger du det til med push() - og du legger til 1 i wordCounts, altså wordsCounts.push(1). -Done
+        
+        4. Etter opptellingen, går du gjennom begge listene samtidig i en løkke og viser hvor mange det forekomster det var av hvert ord. - Done
+        */
+
+        let userText = "";
+        let allowedSymbols = " abcdefghijklmnopqrstuvwxyzaøåABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ";
+        let wordCount = [];
+        let uniqueWords = [];
+
+        updateView();
+
+
+        function updateView(){
+
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <h4>Lim inn tekst</h4>
+            <textarea type="text" rows="8" cols="50" oninput="userText = this.value">${userText}</textarea>
+            <button onclick="analyzeText()">Analyser</button>
+            <div style="${uniqueWords.length>0 ? "display:block": "display:none"}">
+            <h4>Resultat</h4>
+            <ul>${generateList()}</ul>
+            </div>
+            `
+            
+        }
+
+        function analyzeText(){
+            let filteredText = ""
+            //Goes through the text checking if each symbol is in the allowedSymbols string (wich is an array of letters)
+            //Instead of chaining replace() or using regex to remove every possible other symbol.
+            for(let i = 0; i < userText.length;i++){
+                if(allowedSymbols.includes(userText[i])){
+                    filteredText += userText[i];
+                }
+            }
+            // converts to lowercase before comparison, and filters out blank entries, ("").
+            allWords = filteredText.toLowerCase().split(" ");
+            allWords = allWords.filter((allWords) => allWords.length > 0);
+
+            countWords(allWords);
+        }
+
+        function countWords(wordList){
+            //Clears the lists.
+            wordCount = [];
+            uniqueWords = [];
+            //Goes through every word in the list of words..
+            for(let w of wordList){
+                //If the list of words does not contain the word..
+                if(!uniqueWords.includes(w)){
+                    //.. add it to the list of unique words, and add a new entry to the frequency table, with the value 1.
+                    uniqueWords.push(w);
+                    wordCount.push(1);
+                }else{
+                    //if the word is already in the list of unique words, increment the value
+                    wordCount[uniqueWords.indexOf(w)]++;
+                }   
+            }
+            updateView()
+        }
+
+        function generateList(){
+            //Generates the list items
+            let htmlCode = "";
+                for(let i = 0; i < uniqueWords.length; i++){
+                     htmlCode +=`<li><b>${uniqueWords[i]} :</b> ${wordCount[i]} ${i>1 ? "gang":"ganger"}</li>`
+                }
+            return htmlCode;
+        }
+    </script>
+</body>
+</html>
