@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        .main {
+            display: grid;
+            grid-template-columns: repeat(9,85px);
+            grid-template-rows: repeat(10, 85px);
+
+        }
+        .square {
+            border: 1px solid black;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+        
+        }
+        .playerImage{
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rollButton:active{
+            text-align: center;
+            justify-content: center;
+            font-size: 70px;
+            display: flex;
+            width: 85px;
+            height: 85px;
+            color: goldenrod;
+            border: 1px solid black;
+    
+        }
+        .rollButton{
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            font-size: 70px;
+            width: 85px;
+            height: 85px;
+            border: 1px solid black;
+    
+        }
+
+        .startPoint{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 85px;
+            height: 85px;
+            border: 1px solid black;
+        }
+
+
+    </style>
+</head>
+<body style="background-color: grey;">
+    
+    <div id="app" class="main"></div>
+    
+    <script>
+        /*
+        1. Tegne opp rutene
+            -Div'er
+            createRow(startValue, change (som er er -1 eller +1))
+            -Tallene skal gå fra 90 til 1 - Done.
+
+        2. getLadderFrom(squareNo) skal returnere null med mindre det er satt stige i ruten
+         - Lang rekke if-setninger, en for hver stige(?)
+
+        
+        3. Markere getLadderFrom(squareNo) utifra om det er en fallende stige(rød) eller positiv stige(grønn)
+        - skal ikke markere ruten spilleren ender opp i.
+
+        4. Lag spilleren.
+        - Istedenfor terning, bruker vi knapper til å flytte brikken movePiece(1), 2, 3 osv...
+        - Sørge for at stigene fungerer
+
+        5. Erstatte knappene med terning
+        - ⚀ ⚁ ⚂ ⚃ ⚄ ⚅
+
+        6. Har spilleren fullført? Start på nytt.
+
+        */
+
+        //Model
+        const ladders = {1:40, 8:10, 24:5, 33:3, 36:52, 42:30, 43:62, 49:79, 56:37, 64:27, 65:82, 68:85, 74:12, 87:70}
+        const diceIndex = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+        let playerIndex = 0;
+        let playerSymbol = `<img class="playerImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Dee_glyph_%28fixed_width%29.svg/220px-Dee_glyph_%28fixed_width%29.svg.png" width="60%"/>`
+        let gridNumbers = [];
+        let diceResult = 1;
+        
+
+
+        createRow(90, -1)
+        createRow(73, 1)
+        createRow(72, -1)
+        createRow(55, 1)
+        createRow(54, -1)
+        createRow(37, 1)
+        createRow(36, -1)
+        createRow(19, 1)
+        createRow(18, -1)
+        createRow(1, 1)
+        
+        console.log(gridNumbers);
+        //View
+        
+        updateView()
+        function updateView(){
+
+            document.getElementById("app").innerHTML /*HTML*/ = `
+            ${drawGrid()}
+            <div class="startPoint">${playerIndex == 0 ? playerSymbol:'Start'}</div>
+            <button id="dice" class="rollButton" onclick="rollDice()">${diceIndex[diceResult-1]}</button>
+            `
+        }
+
+        //Controller
+        function createRow(startValue, change){
+            let tempList = []
+            for(let i = 0; i < 9; i++){
+                    gridNumbers.push(startValue+(i*change));
+                }
+        }
+        
+        function movePiece(spaces){
+            playerIndex += spaces
+            if(playerIndex >= 90){
+                playerIndex = 90;
+                winCondition();
+            }
+            playerIndex = getLadderFrom(playerIndex) ?? playerIndex
+            
+            updateView()
+        }
+        
+        function getLadderFrom(squareNo){
+            return ladders[squareNo]
+        }
+
+        function drawGrid(){
+            let htmlCode = "";
+            for(let i = 0; i < 90;i++){
+                    htmlCode += `${getSquare(gridNumbers[i])}`;
+                }
+            return htmlCode;
+        }
+
+        //
+        // 
+        function getSquare(squareNumber){
+            
+            for(let item of Object.entries(ladders)){
+                if(squareNumber == playerIndex){
+                    return `<div class="square">${playerSymbol}${squareNumber}</div>` 
+                }
+                
+                if(squareNumber == item[0]){
+                    return item[0] < item[1] ? 
+                    `<div class="square" style="background-color:green;"><h4>Til ${item[1]}</h4> ${squareNumber}</div>` : 
+                    `<div class="square" style="background-color:red;"><h4>Til ${item[1]}</h4> ${squareNumber}</div>` ;
+                }
+                if(squareNumber == item[1]){
+                    return item[0] < item[1] ? 
+                    `<div class="square" style="background-color:lightgreen;">${squareNumber}</div>` : 
+                    `<div class="square" style="background-color:pink;">${squareNumber}</div>` ;
+                }
+            }
+            
+            return `<div class="square">${squareNumber}</div>`
+            
+
+        }
+
+        // 
+        // request animationframe
+        function winCondition(){
+            if(confirm('You won! Play again?')){
+                location.reload();
+            }else{
+                confirm('Are you sure?')
+            }
+        }
+
+
+        function rollDice(){
+            diceResult = getRandomNumber()
+            movePiece(diceResult)
+        }
+
+        function getRandomNumber(){
+            return 1 + Math.floor(Math.random() * (6 - 1 + 1));
+        }
+    
+            
+            
+        
+
+// const diceIndex = [`⚀, ⚁, ⚂, ⚃, ⚄, ⚅`];
+//             if(diceResult == diceIndex.length){
+//             return diceIndex[''];
+
+
+    </script>
+</body>
+</html>

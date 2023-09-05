@@ -4,8 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        li{
+            display: flex;
+            width: 15rem;
+            background-color: rgb(231, 230, 230);
+        }
+        .box{
+            margin-right: 10px;
+            width: 35px;
+            height: 15px;
+        }
+    </style>
+
 </head>
 <body>
-    
+
+    <div id="app"></div>
+
+    <script src="webColorNames.js"></script>
+    <script>
+        
+        /*
+        Oppgave 153 A  
+        Lag en nettside som lister opp alle fargene. Når du har fått til det, implementerer du paging, dvs. at du kun 
+        ser de 10 første fargene fra start. Vis lenker for de andre sidene, fra og med 2 til og med 13. 
+        Når brukeren trykker på en av disse lenkene, vises disse tallene.
+        */
+
+        let currentPageIndex = 0;
+        let pageSize = 10;
+        let pagedList = [...webColorNames];
+        let workingList = pagedList;
+        let filterApplied = "none";
+
+
+        updateView()
+        function updateView(){
+            document.getElementById("app").innerHTML  = /*HTML*/`
+            <div><ul>${getList()}</ul></div>
+            <div>${getPageButtons()}</div>
+            <button ${filterApplied == "even" ? "disabled":""} onclick="filterList('even')">Partall</button> 
+            <button ${filterApplied == "odd" ? "disabled":""} onclick="filterList('odd')">Oddetall</button>
+            <button ${filterApplied == "none" ? "disabled":""} onclick="filterList('none')">Ingen</button>
+            `
+            //<div>${getFilterButtons()}</div>
+        }
+
+        function getList(){
+            let skipCount = currentPageIndex * pageSize; //if on page 2, and there is 7 on each page, (page 0,1) skip the first 2*7=14
+            let takeCount = pageSize; // how many items we show on the page.
+            let html = "";
+
+            for(let item of workingList){
+                skipCount-- //Do this until we have skipped enough items
+                if(skipCount >=0)continue;              
+                
+                if(takeCount <=0)break;
+                takeCount--//Do this until we have added enough items.
+
+                html += `<li><div class="box" style="background-color:${item};"> </div>${item}</li>`
+            }
+            return html;
+        }
+
+        
+        function getPageButtons(){
+            //Calculate the number of buttons needed.
+            numberOfButtons = Math.ceil(workingList.length / pageSize);
+            let html = "";
+            //For each of the pages, add a button with the proper settings.
+            for(let i = 0; i < numberOfButtons;i++){
+                html += `<button ${currentPageIndex == i ? "disabled":""} onclick="changePage(${i})">Page ${i+1}</button>`
+            }
+            return html;
+        }
+
+
+        function filterList(filter){
+            // Way to track what filter is applied, to disable the correct buttons.
+            filterApplied = filter
+
+            if(filter == "even"){
+                // Dont need the spread operator, since filter already returns a new array, and overwrites the old.
+                workingList = pagedList.filter(function (index){return pagedList.indexOf(index) % 2 == 0});
+            }else
+            if(filter == "odd"){
+                workingList = pagedList.filter(function (index){ return pagedList.indexOf(index) % 2 != 0});
+            }else{
+                workingList = pagedList;
+            }
+            console.log(workingList)
+            updateView();
+            
+        }
+        
+        function changePage(index){
+            currentPageIndex = index;
+            updateView();
+        }
+        
+
+    </script>
 </body>
 </html>

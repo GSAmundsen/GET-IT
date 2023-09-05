@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        .main {
+            display: grid;
+            grid-template-columns: repeat(9,90px);
+            grid-template-rows: repeat(10, 90px);
+
+        }
+        .square {
+            background-color: rgb(251, 255, 144);
+            border: 1px solid black;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+        
+        }
+        .square > h4{
+            align-self:center;
+            
+        }
+
+        .playerImage{
+            align-items: center;
+            justify-content: center;
+        }
+
+        .startPoint{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90px;
+            height: 90px;
+            border: 1px solid black;
+        }
+
+        
+
+
+    </style>
+</head>
+<body style="background-color: lightgray;">
+    
+    <div id="app" class="main"></div>
+    
+
+
+
+    <script>
+        /*
+        Stigespill:
+        Hva er modellen?
+        1. Vi har en haug med ruter, med TEKST som skal plasseres i et grid.
+        Hver rutes plassering er en index, hvert unike tall er en verdi. 
+        -En LISTE har index og verdi.
+        -Hva med Objekt?
+            Et objekt kan inneholde mange forskjellige variabler som passer under en paraply. ()
+            Om hver rute er et objekt kan vi si: 
+                player: "" -brikken er ikke her
+                text: "9" - rute nummer 9
+                ladderTo = 42 -Her går det en stige til rute 42
+                ladderFrom = "" -Det kommer ingen stige til denne, fra noen andre ruter.
+
+        2. Vi må vite hvilken rute spilleren er i (indeks), og spilleren skal flytte seg X antall plasser ved moveSpaces(x), 
+            ved å oppdatere indeksen.
+
+        3. updateView() skal hente inn et oppdatert grid, med spillerens nye posisjon.
+            
+        
+        5. Erstatte knappene med terning
+        - ⚀ ⚁ ⚂ ⚃ ⚄ ⚅
+
+        6. Har spilleren fullført? Start på nytt.
+
+        */
+
+        //Model
+        const ladders = {1:40, 8:10, 24:5, 33:3, 36:52, 42:30, 43:62, 49:79, 56:37, 64:27, 65:82, 68:85, 74:12, 87:70}
+        let playerIndex = 0;
+        let playerSymbol = `<img class="playerImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Dee_glyph_%28fixed_width%29.svg/220px-Dee_glyph_%28fixed_width%29.svg.png" width="60%"/>`
+        let gridNumbers = [];
+
+        createRow(90, -1)
+        createRow(73, 1)
+        createRow(72, -1)
+        createRow(55, 1)
+        createRow(54, -1)
+        createRow(37, 1)
+        createRow(36, -1)
+        createRow(19, 1)
+        createRow(18, -1)
+        createRow(1, 1)
+        
+        //View
+        updateView()
+        function updateView(){
+
+            document.getElementById("app").innerHTML /*HTML*/ = `
+            
+            ${drawGrid()}
+            <div class="startPoint">${playerIndex == 0 ? playerSymbol:""}</div>
+            <button id="move1" onclick="movePiece(1)">+1</button>
+            <button id="move2" onclick="movePiece(2)">+2</button>
+            <button id="move3" onclick="movePiece(3)">+3</button>
+            <button id="move4" onclick="movePiece(4)">+4</button>
+            <button id="move5" onclick="movePiece(5)">+5</button>
+            <button id="move6"onclick="movePiece(6)">+6</button>
+            `
+        }
+
+        //Controller
+        function movePiece(spaces){
+            playerIndex += spaces
+            playerIndex = getLadderFrom(playerIndex) ?? playerIndex;
+            updateView()    
+        }
+        
+        function getLadderFrom(squareNo){
+            return ladders[squareNo]
+        }
+
+        function createRow(startValue, change){
+            for(let i = 0; i < 9; i++){
+                    gridNumbers.push(startValue+(i*change));
+                }
+        }
+        
+
+        function drawGrid(){
+            let htmlCode = "";
+            for(let i = 0; i < 90;i++){
+                    htmlCode += `${selectColor(gridNumbers[i])}`;
+                }
+            return htmlCode;
+        }
+
+        
+        function selectColor(squareNumber){
+
+             for(let item of Object.entries(ladders)){
+                if(squareNumber == playerIndex){
+                    return `<div class="square">${playerSymbol}${squareNumber}</div>` 
+                }
+                if(squareNumber == item[0]){
+                    return item[0] < item[1] ? 
+                    `<div class="square" style="background-color:green;"><h4>Til ${item[1]}</h4> ${squareNumber}</div>` : 
+                    `<div class="square" style="background-color:red;"><h4>Til ${item[1]}</h4> ${squareNumber}</div>` ;
+                }
+                if(squareNumber == item[1]){
+                    return item[0] < item[1] ? 
+                    `<div class="square" style="background-color:lightgreen;">${squareNumber}</div>` : 
+                    `<div class="square" style="background-color:pink;">${squareNumber}</div>` ;
+                }
+            }
+            return `<div class="square">${squareNumber}</div>`
+        }
+
+
+    </script>
+</body>
+</html>

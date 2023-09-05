@@ -152,12 +152,8 @@
         for (let x = 0; x < 8; x++) {
           // this creates a 'curve': 3,2,1,0,0,1,2,3 sinces abs negate negativity ^^
           //This also becomes the columns of spaces
-          const spaceCount1 = 3 - Math.floor(Math.abs(3.5 - x));
-          //Hashes are follow the same pattern, but where there is 1 space, theres 2 # and so on
+          const spaceCount1 = 3 - Math.floor(Math.abs(3.5 - x))
           const hashCount = spaceCount1 + 1;
-          /* This creates the following : 
-            
-          */
           const spaceCount2 = 7 - hashCount - spaceCount1;
           
           //Left half
