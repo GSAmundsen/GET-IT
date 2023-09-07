@@ -84,7 +84,6 @@
         function filterList(filter){
             // Way to track what filter is applied, to disable the correct buttons.
             filterApplied = filter
-
             if(filter == "even"){
                 // Dont need the spread operator, since filter already returns a new array, and overwrites the old.
                 workingList = pagedList.filter(function (index){return pagedList.indexOf(index) % 2 == 0});
@@ -94,7 +93,6 @@
             }else{
                 workingList = pagedList;
             }
-            console.log(workingList)
             updateView();
             
         }

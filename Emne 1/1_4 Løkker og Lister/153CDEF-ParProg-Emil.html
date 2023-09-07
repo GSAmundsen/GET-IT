@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        /*
+          Parprogrammering - Emil
+          Oppgave 153 C
+          1. lag funksjon
+          2. krypterer en tekst i store bokstaver (subsitutsjonscipher)
+
+            Skriv en funksjon som kan krypterer en tekst i store bokstaver ved hjelp av et enkelt subsitutsjonscipher. 
+            For å krypfor eksempel en T må du slå opp posisjonen til T i alfabetet (se under) - 
+            og så finne bokstaven på samme posisjon i den hemmelige koden. TERJE kryptert skal for eksempel bli MUKBU.
+            Alfabet       ABCDEFGHIJKLMOPQRSTUVWXYZÆØÅ
+            Hemmelig kode ÅØÆYUOIEABCDFGHJKLMPQRSTVWXZ
+
+            Oppgave 153 D  
+            Lag en funksjon som dekrypterer en kodet tekst.
+
+            Oppgave 153 E  
+            Hvordan kan de to funksjonene refactoreres til en funksjon som tar tre parametre?
+
+            Oppgave 153 F  
+            Lag en funksjon som lager en tilfeldig kode med alle bokstavene i alfabetet i tilfeldig rekkefølge.
+        */
+
+
+        // model
+        let normalAlphabet = 'ABCDEFGHIJKLMOPQRSTUVWXYZÆØÅ';
+        let secretAlphabet = 'ÅØÆYUOIEABCDFGHJKLMPQRSTVWXZ';
+        let word = 'TERJE';
+
+        // view
+        updateView();
+
+        function updateView() {
+          let html = word;
+          document.getElementById('app').innerHTML = html;
+        }
+
+        function encrypt(text) {
+          let newWord = '';
+          for (let i=0; i<text.length; i++) {
+            newWord += secretAlphabet[normalAlphabet.indexOf(text[i])];
+          }
+          word = newWord;
+          updateView();
+        }
+
+
+        function decrypt(text){
+            let oldWord = '';
+            for(let i = 0; i < text.length;i++){
+                oldWord += normalAlphabet[secretAlphabet.indexOf(text[i])];
+            }
+            word = oldWord;
+            updateView();
+        }
+
+        function libCrypt(text, action) {
+          let newWord = '';
+          for (let i=0; i<text.length; i++) {
+            action == 'encrypt' ? newWord += secretAlphabet[normalAlphabet.indexOf(text[i])]
+                                : newWord += normalAlphabet[secretAlphabet.indexOf(text[i])];
+          }
+          word = newWord;
+          updateView();
+        }
+        libCrypt('TERJE','encrypt');
+
+        randomString(15)
+        function randomString(length){
+            let result = "";
+            for(let i = 0; i < length; i++){
+                result += normalAlphabet[randomNumber(normalAlphabet.length)]
+            }
+            word = result;
+            updateView()
+        }
+
+        function randomNumber(max){
+            return Math.floor(Math.random() * max);
+        }
+
+
+
+    </script>
+
+</body>
+</html>

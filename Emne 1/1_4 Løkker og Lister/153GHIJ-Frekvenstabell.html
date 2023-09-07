@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        /*
+        Oppgave 153 G  
+        Skriv en funksjon som tar en liste av tall som parameter og returnerer en frekvenstabell. 
+        En frekvenstabell er en liste som representerer en opptelling av tall i en annen liste. 
+        Hvis tallet 5 ligger på indeks 7 i frekvenstabellen, betyr dette at det var 5 forekomster av tallet 7. 
+        Om du starter med listen [1, 2, 3, 4, 4, 1, 4 ] skal du få en frekvenstabell som dette
+
+        [
+            0, // indeks 0 => 0 forekomster av tallet 0
+            2, // indeks 1 => 2 forekomster av tallet 1
+            1, // indeks 2 => 1 forekomst av tallet 2
+            1, // indeks 3 => 1 forekomst av tallet 3
+            3, // indeks 4 => 3 forekomster av tallet 4
+        ]
+
+        Oppgave 153 H  
+        Skriv en funksjon som tar en liste av tall som parameter og returnerer typetallet, dvs. det tallet 
+        som forekommer flest ganger i listen.
+
+        Oppgave 153 I  
+        Skriv en funksjon for å kjenne igjen yatzy-poengsummen for ett par fra en liste av fem tall, 
+        dvs. verdien på fem terninger. Hvis du har flere par, gjelder det med høyest poengsum.
+
+        */
+        nums = [1, 2, 3, 4, 4, 1, 4, 1, 1, 1, 1 ];
+        yatsyDies = [2,3,4,5,6]
+
+        //getMostUsedNumer(nums)
+        //checkPairScore(yatsyDies);
+        //checkSmallStraight(yatsyDies)
+        checkLargeStraight(yatsyDies);
+
+        function createFrequencyTable(numbers){
+            //Create a new array, with a size of the highest number, and fill all the entries with 0's
+            // Math.max(...numbers) works. Using spread operator returns = 1 2 3 4 4 1 4 , wich Math.max can use
+            // using Math.Max(numbers) does not. as the Math.max cant take [x,x,x,x,x] as parameter.
+
+            //Add 1, since it starts at 0. (4 entries would be 0,1,2,3. We need 0,1,2,3,4)
+            let frequencyTable = new Array(Math.max(...numbers)+1).fill(0)
+            for(let n of numbers){
+                frequencyTable[n]++;
+            }
+            return frequencyTable;
+            console.log(frequencyTable)
+        }
+
+        function getMostUsedNumer(myList){
+            let freqTable = createFrequencyTable(myList);
+            //Find highest number
+            let mostUsedNumber  =  Math.max(...freqTable) 
+            //Find the value of the index.
+            let usedTimes = freqTable.indexOf(mostUsedNumber);
+
+            console.log("Det mest brukte tallet er "+usedTimes+", og er brukt "+ mostUsedNumber+" ganger.");
+
+        }
+
+        function checkPairScore(numbers){
+            //Take a list of numbers, going directly to a frequency table
+            let result = createFrequencyTable(numbers)
+            let highestScore = 0;
+            //Since the highest dice number is last in the list, start at the end.
+            for(let i = result.length; i >0; i--){
+                if(result[i] >= 2){
+                    //Since we are starting at the highest number, we only need to take the first index we encounter.
+                    highestScore = i * 2
+                    break;
+                }
+            }
+            console.log(result)
+            console.log(highestScore)
+            //ta index og gang med 2.
+        }
+
+        function checkSmallStraight(numbers){
+            let result = createFrequencyTable(numbers)
+            let counter = 0;
+            for(let i = 1; i < result.length;i++){
+                if(result[i] != 0){
+                    counter++;
+                }else{
+                    break;
+                }
+            }
+            if(counter == 5){
+                console.log("Liten Straight")
+            }
+        }
+     
+        function checkLargeStraight(numbers){
+            let result = createFrequencyTable(numbers)
+            let counter = 0;
+            console.log(result)
+            for(let i = result.length-1; i > 0;i--){
+                if(result[i] != 0){
+                    counter++;
+                    console.log(counter)
+                }else{
+                    break;
+                }
+            }
+            if(counter == 5){
+                console.log("Stor Straight")
+            }
+        }
+    </script>
+</body>
+</html>
