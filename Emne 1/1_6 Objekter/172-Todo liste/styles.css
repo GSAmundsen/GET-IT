@@ -1,0 +1,17 @@
+table{
+    border: 2px solid grey;
+    border-collapse: collapse;
+}
+
+th{
+    background-color: lightgray;
+    border: 1px solid grey;
+}
+tr, td{
+    border: 1px solid gray;
+    justify-items: right;
+}
+
+td > input{
+    width: 50px;   
+}

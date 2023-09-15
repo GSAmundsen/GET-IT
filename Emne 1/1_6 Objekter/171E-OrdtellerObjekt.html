@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script>
+        /*
+        /*
+        Oppgave 171 E   
+        La brukeren skrive inn en tekst i en <textarea>. Bruk .split(' ') til å dele opp teksten i en liste av ord. 
+        Loop gjennom alle ordene og bruk et objekt til å telle opp hvor mange forekomster det er av hvert ord. 
+        Om du har ordet i variabelen word, teller du opp med if(wordCounts['hei']) wordCounts['hei']++ else wordCounts['hei'] = 1. 
+        Etterpå looper du gjennom alle ordene med for(let word in words). 
+        Merk at det her skal være in, som betyr alle feltene i et objekt, og ikke of som er alle elementene i en liste. 
+        Antall av et bestemt ord er da wordCounts[word].
+        */
+       
+        //model
+        let userText = "Dette er ett eksempel på en tekst. En relativt kort tekst sammenlignet med andre tekster, men en tekst lell.";
+        let wordList = []
+        let wordObject = {}
+        
+        //view
+        updateView()
+        function updateView(){
+
+            document.getElementById("app").innerHTML = /*HTML*/`
+            <h3>Skriv inn tekst:</h3>
+            <textarea type="text" rows="6" cols="50" oninput="userText = this.value">${userText}</textarea>
+            <div>
+            <button onclick="analyzeText()">Analyser!</button>
+            </div>
+            <div>${countWords()}
+            </div>
+            `
+        }
+
+
+        //controller
+        function analyzeText(){
+            // replaces , with space, and . with space, then replaces double-spaces with space. Then splits.
+            wordList = userText.replaceAll(',',' ').replaceAll('.',' ').replaceAll('  ',' ').split(' ');
+            //Removes empty entries in the array
+            wordList = wordList.filter((word) => word.length > 0);
+            
+            for(let w of wordList){
+                if(wordObject[w]) wordObject[w]++;
+                else wordObject[w] = 1;
+            }
+           
+            updateView()
+
+        }
+
+        function countWords(){
+            let html = "";
+            for(let o in wordObject){
+                html += o +" - "+wordObject[o]+"<br>";
+            }
+            return html;
+        }
+
+    </script>
+</body>
+</html>
