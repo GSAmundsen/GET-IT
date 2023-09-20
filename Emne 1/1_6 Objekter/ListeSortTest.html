@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        let objekter = [
+            {firstname: "Tore", lastname: "Borge"},
+            {firstname: "Bjarne", lastname: "Sabel"},
+            {firstname: "Sigrid", lastname: "Aud"},
+            {firstname: "Roger", lastname: "Inge"},
+    
+        ]
+
+        console.log(objekter)
+        objekter2 = objekter.toSorted(curryFunction('lastname'))
+        console.log(objekter2)
+
+
+        function curryFunction(fieldName){
+            return function (a,b){
+                //console.log("a - "+a.firstname, "b - "+b.firstname)
+                //console.log(b[fieldName]);
+                return   b[fieldName] > a[fieldName] ? -1:0; 
+                // a < b = sorted ascending. b < a = sorted descending.( or switch between < and >)
+                // a and b are objects in this case, so a[fieldName] == a['lastname'], as in the key 'lastname' of object a with array syntax.
+            }
+        }
+
+         //Reduce
+         let orders = [
+            {amount:200},
+            {amount:600},
+            {amount:100},
+            {amount:400},
+        ]
+
+        let total = 0;
+        for(let i = 0; i < orders.length;i++){
+            total += orders[i].amount;
+        }
+    
+        totalReduced = orders.reduce((sum,order)=> sum + order.amount, 0) //0 is the starting point for the sum.
+        console.log(totalReduced);
+     
+
+    </script>
+</body>
+</html>

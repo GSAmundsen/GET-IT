@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        //Currying 1
+        function sum(a,b){
+            return a+b;
+        }
+
+        function curriedSum(a){
+                return function (b){{
+                                return sum(a,b)
+                            }
+                        }
+                    }
+                
+            
+        console.log(curriedSum(2)(3))
+        tempVar = curriedSum(10)
+        total = tempVar(5)
+        console.log(total)
+        
+        //Currying 2
+        function orderPizza(size){
+            return function (topping1){
+                return function (topping2){
+                    return function (cheeseType){
+                        
+                        return `You have ordered a ${size} pizza with ${topping1}, ${topping2} and ${cheeseType} cheese. Chorizo is mandatory on ALL pizza.`
+                    }
+                }
+            }
+        }
+        
+        let pizzaSize = orderPizza("Large"); // Level 0
+        let pizzaTopping1 = pizzaSize("Beef"); // topping1
+        let pizzaTopping2 = pizzaTopping1("Pineapple"); // topping 2
+
+        console.log(pizzaTopping2("Cheddar")) // this sends the final piece of the puzzle, cheesetype, completing the function, and returning the order.
+        
+
+        //Currying 3
+        function calculateTotal(cart) {
+          return function(){
+            const totalPrice = cart.reduce((accumulator, itemInArray) => accumulator + itemInArray.price, 0);
+            return totalPrice;
+          }
+        }       
+
+        const cart = [
+          { item: "Shoes", price: 50 },
+          { item: "T-shirt", price: 20 },
+          { item: "Jeans", price: 40 }
+        ];      
+
+        console.log(calculateTotal)
+        const calculateCartTotal = calculateTotal(cart);
+        console.log(calculateCartTotal)
+        console.log(calculateCartTotal());
+
+    </script>
+</body>
+</html>

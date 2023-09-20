@@ -6,7 +6,9 @@ function updateView(){
     <table>
         <tr>
             <th>Id</th>
-            <th>Tast</th>
+            <th>Task</th>
+            <th>Created</th>
+            <th>Last Edited</th>
             <th>Closed date</th>
             <th>Responsible</th>
             <th>Complete</th>
@@ -35,22 +37,42 @@ function generateRows(){
     for(let task of taskList){
     rows += `<tr>
                 <td>${task.id}</td>
-                <td>${task.description}</td>
-                <td>${task.doneDate ?? ""}</td>
-                <td>${task.responsible}</td>
+                <td>${task.inEditMode ? `<input type="text" value="${task.description}" id="descriptionInput${task.id}"/>` : task.description}</td>
+                <td>${task.createdDate ?? ""}</td>
+                <td>${task.lastEditDate ?? ""}</td>
+                <td>${task.closedDate ?? ""}</td>
+                <td>${task.inEditMode ? `<select id="selectPerson${task.id}">${generatePersonnelList(task.responsible)}</select>` : task.responsible}</td>
                 <td><input type="checkbox" ${task.isDone ? "checked":""} oninput="completeTask(${task.id})" /></td>
+                
                 <td><button onclick="deleteTask(${task.id})">Delete</button>
-                <td><button onclick="editTask(${task.id})">Edit</button>
+                <td>${task.inEditMode ?  `<button onclick="updateTaskInfo(${task.id})">Save` :`<button onclick="editTask(${task.id})">Edit`} </button>
             </tr>`
     }
     return rows;
 }
 
-function generatePersonnelList(){
+function updateTaskInfo(id){
+    saveChanges(id, getValueFromId(`descriptionInput${id}`), getValueFromId(`selectPerson${id}`))
+}
+
+function getValueFromId(id){
+    return document.getElementById(id).value
+}
+
+function generatePersonnelList(selectedPerson){
     let html = "";
     for(let p of people){
-        html += `<option>${p}</option>`
+        if(p == selectedPerson)
+            html += `<option selected>${p}</option>`
+        else
+            html += `<option>${p}</option>`
     }
     return html;
 }
+
+function getSelectedPerson(){
+    
+}
+
+
 

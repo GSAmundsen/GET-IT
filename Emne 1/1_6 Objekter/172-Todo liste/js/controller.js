@@ -1,14 +1,13 @@
 "use strict";
-
+function getTimeStamp(){
+    return Date().slice(0,24); //Gets the day, month, date, and time.
+}
 function completeTask(id){
-    let timeStamp = Date().slice(0,24); //Gets the day, month, date, and time.
-    for(let task of taskList){
-        if(task.id == id && !task.isDone){
-            task.doneDate = timeStamp;
-            task.isDone = true;
-            break;
-        }
-    }
+    console.log(taskList[id])
+    if(!taskList[id].isDone)
+        taskList[id].closedDate = getTimeStamp();
+        taskList[id].isDone = true;
+    
     updateView()
 }
 
@@ -24,27 +23,32 @@ function deleteTask(id){
 
 function createTask(desc, assigned){
     if(desc == "" || assigned == "") return;
-    taskList.push( {
+    let task = {
         id: getNextIdValue(),
         description: desc,
-        doneDate: "",
+        createdDate: getTimeStamp(),
         responsible: assigned,
         isDone: false,
         inEditMode: false,
-    })
+    }
+    
+    taskList.push(task)
 
     updateView()
 }
 
 function editTask(id){
-    for(let task in taskList){
-        if(task.id == id){
-            task.inEditMode = true;
-        }
-    }
+    taskList[id].inEditMode = true;
+    updateView()
 }
 
-
+function saveChanges(id, newDescription, newPerson){
+    taskList[id].description = newDescription;
+    taskList[id].responsible = newPerson;
+    taskList[id].inEditMode = false;
+    taskList[id].lastEditDate = getTimeStamp()
+    updateView()
+}
 
 
 function getNextIdValue(){

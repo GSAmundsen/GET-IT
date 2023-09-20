@@ -1,4 +1,4 @@
-let taskIdCounter = 0;
+let taskIdCounter = 1;
 
 const people = [
     "Erik Hansen",
@@ -16,11 +16,16 @@ const people = [
 let task = {
     id: 0,
     description: "Test",
-    doneDate: null,
+    createdDate: null,
+    lastEditDate: null,
+    closedDate: null,
     responsible: people[5],
     isDone: false,
+    inEditMode: false
 }
 
 let taskList = [task];
+
+let newTaskDescription = "";
 
   
