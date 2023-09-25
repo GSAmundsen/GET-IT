@@ -10,7 +10,7 @@ function updateView(){
             <th>Created</th>
             <th>Last Edited</th>
             <th>Closed date</th>
-            <th>Responsible</th>
+            <th>Responsible <br><select><option>All</option>${generatePersonnelList()}</select></th>
             <th>Complete</th>
         </tr>
         ${generateRows()}
@@ -57,6 +57,12 @@ function updateTaskInfo(id){
 
 function getValueFromId(id){
     return document.getElementById(id).value
+}
+
+function createPersonSelect(){
+   // return /*HTML*/`
+   // <select onselect="sett filter"><
+   // `
 }
 
 function generatePersonnelList(selectedPerson){

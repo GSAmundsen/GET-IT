@@ -13,6 +13,8 @@ const people = [
     "Mette Eriksen"
 ];
 
+let filter = "";
+
 let task = {
     id: 0,
     description: "Test",
