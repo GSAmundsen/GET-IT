@@ -1,0 +1,16 @@
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\bin\Debug\net8.0\data.txt
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\bin\Debug\net8.0\FileReadWrite.exe
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\bin\Debug\net8.0\FileReadWrite.deps.json
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\bin\Debug\net8.0\FileReadWrite.runtimeconfig.json
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\bin\Debug\net8.0\FileReadWrite.dll
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\bin\Debug\net8.0\FileReadWrite.pdb
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\obj\Debug\net8.0\FileReadWrite.GeneratedMSBuildEditorConfig.editorconfig
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\obj\Debug\net8.0\FileReadWrite.AssemblyInfoInputs.cache
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\obj\Debug\net8.0\FileReadWrite.AssemblyInfo.cs
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\obj\Debug\net8.0\FileReadWrite.csproj.CoreCompileInputs.cache
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\obj\Debug\net8.0\FileReadWrite.sourcelink.json
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\obj\Debug\net8.0\FileReadWrite.dll
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\obj\Debug\net8.0\refint\FileReadWrite.dll
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\obj\Debug\net8.0\FileReadWrite.pdb
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\obj\Debug\net8.0\FileReadWrite.genruntimeconfig.cache
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave316\FileReadWrite\obj\Debug\net8.0\ref\FileReadWrite.dll

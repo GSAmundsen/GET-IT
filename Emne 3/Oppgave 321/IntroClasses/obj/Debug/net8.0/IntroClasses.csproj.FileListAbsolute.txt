@@ -1,0 +1,15 @@
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\bin\Debug\net8.0\IntroClasses.exe
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\bin\Debug\net8.0\IntroClasses.deps.json
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\bin\Debug\net8.0\IntroClasses.runtimeconfig.json
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\bin\Debug\net8.0\IntroClasses.dll
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\bin\Debug\net8.0\IntroClasses.pdb
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\obj\Debug\net8.0\IntroClasses.GeneratedMSBuildEditorConfig.editorconfig
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\obj\Debug\net8.0\IntroClasses.AssemblyInfoInputs.cache
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\obj\Debug\net8.0\IntroClasses.AssemblyInfo.cs
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\obj\Debug\net8.0\IntroClasses.csproj.CoreCompileInputs.cache
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\obj\Debug\net8.0\IntroClasses.sourcelink.json
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\obj\Debug\net8.0\IntroClasses.dll
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\obj\Debug\net8.0\refint\IntroClasses.dll
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\obj\Debug\net8.0\IntroClasses.pdb
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\obj\Debug\net8.0\IntroClasses.genruntimeconfig.cache
+G:\GET IT\GET IT Git\GET-IT\Emne 3\Oppgave 321\IntroClasses\obj\Debug\net8.0\ref\IntroClasses.dll
