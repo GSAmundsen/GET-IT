@@ -14,12 +14,13 @@ namespace SodaMachine
             _coin5 = c5;
             _coin10 = c10;
             _coin20 = c20;
-
         }
 
-        public int GetAmount()
+        public int[] GetAmount()
         {
-            return _coin1+_coin5+_coin10+_coin20;
+            return [_coin1,_coin5,_coin10,_coin20];
         }
+
+
     }
 }

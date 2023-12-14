@@ -1,0 +1,22 @@
+@startuml
+
+skin rose
+
+title Classes - Class Diagram
+
+
+class Restaurant {
+  +void AddTable
+  +void CreateReservation
+}
+
+class Reservation{
+  +void GetDescription()
+}
+class Table{
+  +void GetDescription()
+  
+}
+
+
+@enduml
