@@ -1,0 +1,128 @@
+1. Målgruppen er gutter/jenter mellom 18-35 med interresse for teknologi, uten kodekunnskap
+2. Siden skal være på 1 side, og må være brukervennlig, professjonell og enkel.
+3. Siden skal ha et spill hvor man demonstrerer koding på en enkel måte. 
+4. Det skal være mulig legge igjen info (navn, epost)
+
+
+
+
+Todo:
+Overlay:
+Story, hvorfor skal spilleren gjøre det den skal gjøre: Skal komme seg til GET academy for 
+Pre-Level 1 - Overlay med Intro/story, en Hook, hva skal spilleren gjøre. 
+1 > 2 Litt mer story
+2 > 3 
+3 > 4 bilde med 404
+
+
+
+Ida:
+Grønn ramme rundt kommandoer som holder på å kjøre? 
+Overlay, med bilder av karakterene. Ok? eller mer?
+
+
+Programmering?
+*** Noen form for "Celebration" når man når mål.
+*** Endre teksten over spill-brettet
+*** Animasjon, evt med flagg. (for stort?)
+*** Overlay over spillbrettet, transparent, med "Victory!" e.l
+
+
+*** Legge ting på lvl 8-9-10
+*** Story til lvl 8-9-10
+*** Bilde av mål man skal bruke noe på
+*** Bilde med ramme - Inventory
+
+Level 1 - OK
+Level 2 - OK
+Level 3 - OK
+Level 4 - OK
+Level 5 - OK
+Level 6 - OK
+Level 7 - OK
+Level 8 - Bruk terminal for å låse opp Mål
+Level 9 - Plukk opp nøkkel og bruk på bygget
+Level 10 - Kom i mål, med feiling
+
+
+
+
+
+Trenger:
+1. Høyoppløselig bilde av karakter til Overlay
+2. Bilder av ting
+3. Story ferdig skrevet og fordelt på 10 lvls
+
+
+Items (.png)
+Item            Icon              Text
+Infinite Loop - liggende 8-tall - 
+Datamaskin -    ??              - ??
+Eskil -         Tryne           - Jeg finner ikke unmute knappen?!
+Terje -         Tryne           - Kan du finne Eskil? Chorei starter om 2 minutt!
+unMute knapp -  ??              - Hei alle sammen! Vi gjør alle feil, feiling er læring. Da starter vi dagen med chorei!
+
+
+
+1 - Story
+TerjeFjes // Hei, Rookie! Etter 10 uker i programmet vårt vil du kunne lage dette spillet og mer! Kun fantasien setter grenser.
+Uten mål og mening vil du nok ikke finne frem. Ta dine første steg!
+2 - Story
+TerjeFjes // Med litt input fra kodelærere vil reisen bli enda lettere.
+3 - Story
+TerjeFjes // Jeg har det litt travelt, må dra til GetAcademy, møt meg der! Plukk opp loopen der er du snill.
+4 - Story
+TerjeFjes // En infinite loop!! Da går det galt. Jeg må avgårde! Kan du finne Eskil? Morgenmøte starter om 2minutter!
+5 - "Story"
+Eskil // Jeg finner ikke unMute knappen?! Kan du hjelpe meg?
+6 - "Random"
+Datamaskin, en maskin med litt kraft kan være greit å ha.
+7 - "Random"
+Headsett & mikrofon er essensielt for å sikre god kommunikasjon med laget ditt.
+
+
+
+
+"Kjekt å ha":
+- Kanskje en kort quiz? type, Kahoot, med 1 spørsmål?
+- Mobilversjon
+
+
+
+1. Kommandoene ligger i knapper, når man trykker på knappen flyttes kommandoen bort i en "Program" liste. Om brukeren ombestemmer seg kan hen trykke på knappen i programlisten for å fjerne den.
+
+2. Kommando-div'ene -  Når programmet har kjørt kommandoen i listen, blir den grønn(riktig) eller rød(feil) og psuedokode vises i knappen istedenfor (fra "Gå fram 1 steg" til "MoveForward(1))
+
+3. Reset/Run - Når programmet kjører endres Reset/Run knappene til "Running Code...". Denne endres avhengig av utfallet.
+Riktig - "Correct! Continue onwards!",
+Feil - "So close.. Try again!"
+Dette kan være lister over forskjellige fraser som velges tilfeldig.
+
+4. Ett item kan kun brukes ett sted
+
+5. Plukke opp instrument, Lyd/musikk.
+
+6. Gå fram X steg, Snu X. Disse knappene har
+
+7. Målet er å plukke opp kommandoer (kode) og bruke dette for å fjerne hindringer. I mål plukker spilleren opp kommandoe (feks. Snu) som brukes videre i spillet.
+
+Story Levels:
+Level 1 "Fremover"
+    Rookie går rundt i ørkenen i Larvik.
+Level 2 "Snu"
+    Rookie går forbi logikk og kode han ikke forstår hvordan han skal bruke.  
+Level 3 "Plukk opp" Objekt: Loop
+    Get Wizard dukker opp, Rookie får i oppdrag om å plukke opp en loop. Siden kræsjer.
+Level 4 "Bruk" Objekt:
+    Etter siden har kræsjet, må Rookie komme seg til Academy.
+    Get Wizard ber Rookie om å komme til akademiet for en prat.
+Level 5 "Plukk
+
+Story levels "hook"
+Overlay 1 - 
+Level 1 -
+Overlay 2 -
+Level 2 - 
+Level 3 - 
+Level 4 - 
+Level 5 - random
